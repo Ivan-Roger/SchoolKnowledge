@@ -45,4 +45,13 @@
         android:layout_centerHorizontal="true"
         android:orientation="horizontal"
         android:gravity="center"></LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/new_user_submit"
+        android:id="@+id/new_user_submit"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="onSubmit"/>
 </RelativeLayout>

@@ -8,15 +8,24 @@ import java.util.Set;
  * Created by rogeri on 08/03/16.
  */
 public class User implements Serializable {
+    private int id;
     private String name;
     private int pic;
     private HashMap<String,Integer> scores;
+    private static int lastID=0;
 
-    public User(String name,int pic) {
+    public User(int id, String name,int pic) {
+        lastID=Math.max(lastID,id);
         this.name = name;
         this.pic = pic;
         scores = new HashMap<String,Integer>();
     }
+
+    public static int getNextID() {
+        return lastID++;
+    }
+
+    public int getID() { return id; }
 
     public String getName() {
         return this.name;

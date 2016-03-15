@@ -14,4 +14,8 @@
 
     <string name="new_user_name_label">Votre nom :</string>
     <string name="new_user_pic_label">Selectionnez une image</string>
+
+    <string name="new_user_submit">Créer le compte</string>
+
+    <string name="wrong_username">Nom invalide !</string>
 </resources>

@@ -41,7 +41,7 @@ public class ActivityLogin extends AppCompatActivity {
 
     private void updateLoginList() {
         ListView list = (ListView) findViewById(R.id.login_user_list);
-        final UserViewAdapter adapter = new UserViewAdapter(this,R.layout.layout_user_template,getUsers());
+        final UserViewAdapter adapter = new UserViewAdapter(this,R.layout.layout_user_template,Main.userDAO.getJoueurs());
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -49,21 +49,6 @@ public class ActivityLogin extends AppCompatActivity {
                 onUserLogin(adapter.getItem(position));
             }
         });
-    }
-
-    private ArrayList<User> getUsers() {
-        ArrayList<User> uList = new ArrayList<>();
-
-        User user = new User("User 01",ActivityNewUser.USER_PICTURES[0]);
-        uList.add(user);
-        user = new User("User 02",ActivityNewUser.USER_PICTURES[1]);
-        uList.add(user);
-        user = new User("User 03",ActivityNewUser.USER_PICTURES[2]);
-        uList.add(user);
-        user = new User("User 04",ActivityNewUser.USER_PICTURES[3]);
-        uList.add(user);
-
-        return uList;
     }
 
     public void onUserNew(View v) {
@@ -74,7 +59,7 @@ public class ActivityLogin extends AppCompatActivity {
     public void onUserLogin(User u) {
         Intent intent = new Intent(this, ActivityHome.class);
         intent.putExtra(EXTRA_ANONYMOUS_MODE,false);
-        intent.putExtra(EXTRA_USER,u);
+        intent.putExtra(EXTRA_USER,u.getID());
         startActivity(intent);
         super.finish();
     }

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rogeri.schoolknowledge.R;
+import com.rogeri.schoolknowledge.controler.ActivityNewUser;
 import com.rogeri.schoolknowledge.model.User;
 
 import java.util.HashMap;
@@ -52,7 +53,7 @@ public class UserViewAdapter extends ArrayAdapter<User> {
         userName.setText(user.getName());
 
         ImageView userPic = (ImageView) userView.findViewById(R.id.user_template_pic);
-        userPic.setImageResource(user.getPic());
+        userPic.setImageResource(ActivityNewUser.USER_PICTURES[user.getPic()]);
 
         TextView userScore = (TextView) userView.findViewById(R.id.user_template_score);
         userScore.setText("Score: "+user.getTotalScore());

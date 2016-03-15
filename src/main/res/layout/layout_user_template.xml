@@ -8,7 +8,7 @@
         android:id="@+id/user_template_pic"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:src="@mipmap/app_logo" />
+        android:src="@mipmap/user_icon_anonymous" />
 
     <TextView
         android:layout_width="wrap_content"
