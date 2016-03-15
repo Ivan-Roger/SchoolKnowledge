@@ -3,12 +3,14 @@ package com.rogeri.schoolknowledge.controler;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.rogeri.schoolknowledge.R;
@@ -25,6 +27,14 @@ public class ActivityLogin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        RelativeLayout l = (RelativeLayout) findViewById(R.id.login_user_anonymous);
+        l.setClickable(true);
+        l.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onAnonymousLogin(v);
+            }
+        });
 
         updateLoginList();
     }
@@ -66,11 +76,13 @@ public class ActivityLogin extends AppCompatActivity {
         intent.putExtra(EXTRA_ANONYMOUS_MODE,false);
         intent.putExtra(EXTRA_USER,u);
         startActivity(intent);
+        super.finish();
     }
 
     public void onAnonymousLogin(View v) {
         Intent intent = new Intent(this, ActivityHome.class);
         intent.putExtra(EXTRA_ANONYMOUS_MODE,true);
         startActivity(intent);
+        super.finish();
     }
 }

@@ -4,18 +4,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
 
 import com.rogeri.schoolknowledge.R;
-
-import java.util.ArrayList;
 
 public class ActivityNewUser extends AppCompatActivity {
     public static int[] USER_PICTURES = {
             R.mipmap.user_icon_1,
             R.mipmap.user_icon_2,
             R.mipmap.user_icon_3,
-            R.mipmap.user_icon_4
+            R.mipmap.user_icon_4,
+            R.mipmap.user_icon_5
     };
 
     @Override

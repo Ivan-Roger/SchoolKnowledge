@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name" translatable="false">School Knowledge</string>
+    <string name="app_name">School Knowledge</string>
     <string name="app_version" translatable="false">v0.0.1</string>
-    <string name="app_info" translatable="false">by Ivan ROGER - WIP</string>
+    <string name="app_info">by Ivan ROGER - WIP</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
