@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name" translatable="false">School Knowledge</string>
+    <string name="app_version" translatable="false">v0.0.1</string>
+    <string name="app_info" translatable="false">by Ivan ROGER - WIP</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="login_user_new">Nouveau Compte</string>
+    <string name="login_user_anonymous_name">Invité</string>
+    <string name="login_user_anonymous_info">Jouez sans enregistrer le score</string>
+
+    <string name="new_user_name_label">Votre nom :</string>
+    <string name="new_user_pic_label">Selectionnez une image</string>
+</resources>
