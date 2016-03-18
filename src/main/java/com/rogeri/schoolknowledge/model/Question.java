@@ -1,15 +1,17 @@
 package com.rogeri.schoolknowledge.model;
 
-import java.io.Serializable;
-
 /**
  * Created by rogeri on 08/03/16.
  */
-public abstract class Question implements Serializable {
+public abstract class Question {
     private final int id;
+    private final int exerciseID;
+    private final int gameID;
     private final int score;
 
-    public Question(int id, int score) {
+    public Question(int gameID, int exerciseID, int id, int score) {
+        this.gameID = gameID;
+        this.exerciseID = exerciseID;
         this.id = id;
         this.score = score;
     }

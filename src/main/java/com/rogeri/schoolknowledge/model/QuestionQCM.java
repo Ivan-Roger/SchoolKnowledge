@@ -13,16 +13,16 @@ public class QuestionQCM extends Question {
     private ArrayList<Boolean> answers;
     private boolean showAnswersCount;
 
-    public QuestionQCM(int id, int score, String question, ArrayList<String> reponses, ArrayList<Boolean> answers, boolean showAnswersCount) {
-        super(id,score);
+    public QuestionQCM(int gameID, int exerciseID, int id, int score, String question, ArrayList<String> reponses, ArrayList<Boolean> answers, boolean showAnswersCount) {
+        super(gameID, exerciseID, id,score);
         this.question = question;
         this.reponses = reponses;
         this.answers = answers;
         this.showAnswersCount = showAnswersCount;
     }
 
-    public QuestionQCM(int id, int score, String question, ArrayList<String> reponses, ArrayList<Boolean> answers) {
-        this(id, score, question, reponses, answers, false);
+    public QuestionQCM(int gameID, int exerciseID, int id, int score, String question, ArrayList<String> reponses, ArrayList<Boolean> answers) {
+        this(gameID, exerciseID, id, score, question, reponses, answers, false);
     }
 
     public String getQuestion() {

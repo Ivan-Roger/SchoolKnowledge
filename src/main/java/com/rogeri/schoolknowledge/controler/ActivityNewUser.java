@@ -17,8 +17,6 @@ public class ActivityNewUser extends AppCompatActivity {
     private User joueur = null;
     private int pickedImage;
 
-    private final int IMAGE_ID = 0;
-
     public static int[] USER_PICTURES = {
             R.mipmap.user_icon_1,
             R.mipmap.user_icon_2,
@@ -45,8 +43,12 @@ public class ActivityNewUser extends AppCompatActivity {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    v.setAlpha((float)1);
-                    pickedImage = ((ImageViewIdentified)v).getIdentifier();
+                    LinearLayout table = (LinearLayout) findViewById(R.id.new_user_pic_table);
+                    for (int j = 0; j < table.getChildCount(); j++) {
+                        table.getChildAt(j).setAlpha((float) 1);
+                    }
+                    v.setAlpha((float) 0.5);
+                    pickedImage = ((ImageViewIdentified) v).getIdentifier();
                 }
             });
             table.addView(view);
@@ -59,10 +61,7 @@ public class ActivityNewUser extends AppCompatActivity {
             Toast.makeText(this, "@string/wrong_username", Toast.LENGTH_SHORT).show();
         else {
             User u = new User(User.getNextID(),name.getText().toString(), pickedImage);
-            Intent intent = new Intent(this, ActivityHome.class);
-            intent.putExtra(ActivityLogin.EXTRA_ANONYMOUS_MODE, false);
-            intent.putExtra(ActivityLogin.EXTRA_USER,u.getID());
-            startActivity(intent);
+            ActivityHome.setLogin(u.getID());
             super.finish();
         }
     }

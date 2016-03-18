@@ -8,16 +8,21 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".controler.ActivityHome"/>
-        <activity
-            android:name=".controler.ActivityLogin"
-            android:label="Connexion">
+        <activity android:name=".controler.ActivityHome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".controler.ActivityLogin"
+            android:label="Connexion">
+        </activity>
         <activity android:name=".controler.ActivityNewUser"></activity>
+        <meta-data android:name="DATABASE" android:value="school_knowledge.db" />
+        <meta-data android:name="VERSION" android:value="0" />
+        <meta-data android:name="QUERY_LOG" android:value="true" />
+        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.rogeri.schoolknowledge.model" />
     </application>
 
 </manifest>

@@ -1,13 +1,12 @@
 package com.rogeri.schoolknowledge.model;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Set;
 
 /**
  * Created by rogeri on 08/03/16.
  */
-public class User implements Serializable {
+public class User {
     private int id;
     private String name;
     private int pic;
