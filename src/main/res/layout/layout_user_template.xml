@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/login_user_anonymous_info"
-        android:id="@+id/user_template_score"
+        android:id="@+id/user_template_info"
         android:layout_below="@+id/user_template_name"
         android:layout_toEndOf="@+id/user_template_pic" />
 </RelativeLayout>

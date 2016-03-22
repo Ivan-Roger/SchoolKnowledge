@@ -4,12 +4,28 @@ import com.rogeri.schoolknowledge.model.Question;
 import com.rogeri.schoolknowledge.model.QuestionQCM;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 
 /**
  * Created by rogeri on 18/03/16.
  */
 public class QuestionDAO {
-    public ArrayList<ArrayList<ArrayList<Question>>> questions;
+    private static final String TABLE_NAME = "Question";
+
+    private static final String COL_ID = "id";
+    private static final String COL_TYPE = "type";
+    private static final String COL_SCORE = "score";
+
+    public static final String CREATE_TABLE = "CREATE_TABLE "+TABLE_NAME+" ("+
+            COL_ID+" VARCHAR(10) PRIMARY KEY,"+
+            COL_TYPE+" VARCHAR(15) NOT NULL,"+
+            COL_SCORE+" INTEGER"+
+        ");";
+
+    public static final String DROP_TABLE = "DROP_TABLE "+TABLE_NAME+" IF EXISTS;";
+
+    public HashMap<String,Question> questions = new HashMap<>();
 
     public QuestionDAO() {
         ArrayList<String> r = new ArrayList<>();
@@ -22,19 +38,15 @@ public class QuestionDAO {
         a.add(false);
 
         Question q = new QuestionQCM(0,0,0,10,"wcgv ?",r,a);
-        ArrayList<ArrayList<Question>> g = new ArrayList<>();
-        ArrayList<Question> e = new ArrayList<>();
-        e.add(q);
-        g.add(e);
-        questions.add(g);
+        questions.put(q.getID(), q);
     }
 
-    public ArrayList<Question> getQuestionsByGameExercise(int g, int e) {
-        return questions.get(g).get(e);
+    public Collection<Question> getQuestionsByGameExercise(int g, int e) {
+        return questions.values();
     }
     /*
     TODO :
-    - getQuestion(int game, int exercise, int q)
+    - getQuestion(int game, int exercise, int q) --> Find question by reading id
     - addQuestion(Question q)
     */
 }

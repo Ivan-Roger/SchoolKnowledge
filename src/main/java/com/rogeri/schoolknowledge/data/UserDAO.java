@@ -13,15 +13,15 @@ public class UserDAO {
     public UserDAO() {
         User user = new User(0,"User 01",0);
         users.add(user);
-        user = new User(1,"User 02",1);
+        user = new User(User.getNextID(),"User 02",1);
         users.add(user);
-        user = new User(2,"User 03",2);
+        user = new User(User.getNextID(),"User 03",2);
         users.add(user);
-        user = new User(3,"User 04",3);
+        user = new User(User.getNextID(),"User 04",3);
         users.add(user);
-        user = new User(4,"User 05",4);
+        user = new User(User.getNextID(),"User 05",4);
         users.add(user);
-        user = new User(5,"User 06",5);
+        user = new User(User.getNextID(),"User 06",5);
         users.add(user);
     }
 

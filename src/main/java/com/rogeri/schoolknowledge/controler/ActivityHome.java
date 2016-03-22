@@ -3,16 +3,22 @@ package com.rogeri.schoolknowledge.controler;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.rogeri.schoolknowledge.R;
 import com.rogeri.schoolknowledge.model.User;
+import com.rogeri.schoolknowledge.view.GameViewAdapter;
 
 public class ActivityHome extends AppCompatActivity {
     private final int LOGIN_REQUEST=40;
     private static int playerID;
     private static boolean anonymousMode;
     private static boolean loggedIn = false;
+
+    public static final int[] GAME_PICTURES = {R.mipmap.app_logo};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +62,15 @@ public class ActivityHome extends AppCompatActivity {
 
     private void initialize() {
         setContentView(R.layout.activity_home);
+        ListView gameList = (ListView) findViewById(R.id.listView);
+        final GameViewAdapter adapter = new GameViewAdapter(this,R.layout.layout_user_template,Main.gameDAO.getGames())
+        gameList.setAdapter(adapter);
+        gameList.setOnClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                adapter.getItem(position);
+            }
+        });
 
         if (anonymousMode) {
             Toast.makeText(this, "Jeu en Invité", Toast.LENGTH_SHORT).show();

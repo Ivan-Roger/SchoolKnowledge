@@ -4,22 +4,22 @@ import com.rogeri.schoolknowledge.controler.Main;
 import com.rogeri.schoolknowledge.model.Exercise;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 
 /**
  * Created by rogeri on 18/03/16.
  */
 public class ExerciseDAO {
-    private ArrayList<ArrayList<Exercise>> exercises;
+    private HashMap<String,Exercise> exercises = new HashMap<>();
 
     public ExerciseDAO() {
         Exercise exercise = new Exercise(0, 0, 0, Main.questionDAO.getQuestionsByGameExercise(0, 0));
-        ArrayList<Exercise> game0 = new ArrayList<>();
-        game0.add(exercise);
-        exercises.add(game0);
+        exercises.put(exercise.getID(), exercise);
     }
 
-    public ArrayList<Exercise> getExercisesByGame(int id) {
-        return exercises.get(id);
+    public Collection<Exercise> getExercisesByGame(int id) {
+        return exercises.values();
     }
     /*
     TODO :

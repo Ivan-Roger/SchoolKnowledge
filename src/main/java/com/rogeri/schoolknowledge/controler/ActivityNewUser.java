@@ -61,6 +61,7 @@ public class ActivityNewUser extends AppCompatActivity {
             Toast.makeText(this, "@string/wrong_username", Toast.LENGTH_SHORT).show();
         else {
             User u = new User(User.getNextID(),name.getText().toString(), pickedImage);
+            Main.userDAO.addJoueur(u);
             ActivityHome.setLogin(u.getID());
             super.finish();
         }
