@@ -9,11 +9,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.rogeri.schoolknowledge.R;
+import com.rogeri.schoolknowledge.model.Game;
 import com.rogeri.schoolknowledge.model.User;
 import com.rogeri.schoolknowledge.view.GameViewAdapter;
 
 public class ActivityHome extends AppCompatActivity {
     private final int LOGIN_REQUEST=40;
+    public static final String EXTRA_GAME_ID = "gameID";
     private static int playerID;
     private static boolean anonymousMode;
     private static boolean loggedIn = false;
@@ -63,12 +65,12 @@ public class ActivityHome extends AppCompatActivity {
     private void initialize() {
         setContentView(R.layout.activity_home);
         ListView gameList = (ListView) findViewById(R.id.listView);
-        final GameViewAdapter adapter = new GameViewAdapter(this,R.layout.layout_user_template,Main.gameDAO.getGames())
+        final GameViewAdapter adapter = new GameViewAdapter(this,R.layout.layout_user_template,Main.gameDAO.getGames());
         gameList.setAdapter(adapter);
-        gameList.setOnClickListener(new AdapterView.OnItemClickListener() {
+        gameList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                adapter.getItem(position);
+                playGame(adapter.getItem(position));
             }
         });
 
@@ -77,5 +79,11 @@ public class ActivityHome extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Jeu avec "+Main.userDAO.getJoueur(playerID).getName(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void playGame(Game g) {
+        Intent intent = new Intent(this, ActivityLevelSelection.class);
+        intent.putExtra(EXTRA_GAME_ID,g.getID());
+        startActivity(intent);
     }
 }
