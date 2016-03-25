@@ -10,24 +10,22 @@ import java.util.HashMap;
 /**
  * Created by rogeri on 18/03/16.
  */
-public class QuestionDAO {
-    private static final String TABLE_NAME = "Question";
+public class DAOQuestionQCM {
+    private static final String TABLE_NAME = "QuestionQCM";
 
     private static final String COL_ID = "id";
-    private static final String COL_TYPE = "type";
     private static final String COL_SCORE = "score";
 
     public static final String CREATE_TABLE = "CREATE_TABLE "+TABLE_NAME+" ("+
             COL_ID+" VARCHAR(10) PRIMARY KEY,"+
-            COL_TYPE+" VARCHAR(15) NOT NULL,"+
             COL_SCORE+" INTEGER"+
         ");";
 
     public static final String DROP_TABLE = "DROP_TABLE "+TABLE_NAME+" IF EXISTS;";
 
-    public HashMap<String,Question> questions = new HashMap<>();
+    public HashMap<String,QuestionQCM> questions = new HashMap<>();
 
-    public QuestionDAO() {
+    public DAOQuestionQCM() {
         ArrayList<String> r = new ArrayList<>();
         ArrayList<Boolean> a = new ArrayList<>();
         r.add("wcgv");
@@ -37,12 +35,16 @@ public class QuestionDAO {
         r.add("aaaa");
         a.add(false);
 
-        Question q = new QuestionQCM(0,0,0,10,"wcgv ?",r,a);
+        QuestionQCM q = new QuestionQCM(0,0,0,10,"Question ?",r,a);
         questions.put(q.getID(), q);
     }
 
-    public Collection<Question> getQuestionsByGameExercise(int g, int e) {
+    public Collection<QuestionQCM> getQuestionsByGameExercise(int g, int e) {
         return questions.values();
+    }
+
+    public QuestionQCM getQuestionsById(String id) {
+        return questions.get(id);
     }
     /*
     TODO :

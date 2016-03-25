@@ -4,22 +4,27 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/app_logo"
         android:label="@string/app_name"
+        android:icon="@mipmap/app_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".controler.ActivityHome">
+        <activity
+            android:name=".controler.ActivityHome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".controler.ActivityLogin"
-            android:label="Connexion" />
-        <activity android:name=".controler.ActivityNewUser" />
-        <activity android:name=".controler.ActivityLevelSelection"></activity>
+            android:label="Connexion" >
+        </activity>
+        <activity
+            android:name=".controler.ActivityNewUser"
+            android:label="Inscription" />
+        <activity
+            android:name=".controler.ActivityLevelSelection"
+            android:label="Niveau" />
     </application>
 
 </manifest>

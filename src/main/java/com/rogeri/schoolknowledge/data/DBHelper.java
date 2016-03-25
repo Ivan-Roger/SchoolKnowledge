@@ -28,11 +28,11 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         // Créer la table question
-        db.execSQL(QuestionDAO.CREATE_TABLE);
+        db.execSQL(DAOQuestionQCM.CREATE_TABLE);
 
         /*
         // Insérer les données
-        for (String insert : QuestionDAO.getInsertSQL()) {
+        for (String insert : DAOQuestionQCM.getInsertSQL()) {
             db.execSQL(insert);
         }
         */
@@ -48,7 +48,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 + newVersion + ", WHICH WILL DESTROY ALL OLD DATA !");
 
         // DROP
-        db.execSQL(QuestionDAO.DROP_TABLE);
+        db.execSQL(DAOQuestionQCM.DROP_TABLE);
 
         // Relancer la création
         onCreate(db);

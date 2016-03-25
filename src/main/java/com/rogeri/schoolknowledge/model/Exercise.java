@@ -27,6 +27,7 @@ public class Exercise {
     }
 
     public Question getQuestion(int id) {
-        return ((Question[])questions.toArray())[id];
+        if (questions==null) return null;
+        return (Question)questions.toArray()[id];
     }
 }

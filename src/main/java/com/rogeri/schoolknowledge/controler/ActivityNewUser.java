@@ -1,15 +1,14 @@
 package com.rogeri.schoolknowledge.controler;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.rogeri.schoolknowledge.R;
+import com.rogeri.schoolknowledge.data.DAOUser;
 import com.rogeri.schoolknowledge.model.User;
 import com.rogeri.schoolknowledge.view.ImageViewIdentified;
 
@@ -60,9 +59,9 @@ public class ActivityNewUser extends AppCompatActivity {
         if (name.getText().toString().isEmpty())
             Toast.makeText(this, "@string/wrong_username", Toast.LENGTH_SHORT).show();
         else {
+            DAOUser userDAO = new DAOUser();
             User u = new User(User.getNextID(),name.getText().toString(), pickedImage);
-            Main.userDAO.addJoueur(u);
-            ActivityHome.setLogin(u.getID());
+            userDAO.addJoueur(u);
             super.finish();
         }
     }
