@@ -1,5 +1,6 @@
 package com.rogeri.schoolknowledge.model;
 
+import com.rogeri.schoolknowledge.controler.ActivityQCM;
 import com.rogeri.schoolknowledge.model.Question;
 
 import java.util.ArrayList;
@@ -12,6 +13,8 @@ public class QuestionQCM extends Question {
     private ArrayList<String> reponses;
     private ArrayList<Boolean> answers;
     private boolean showAnswersCount;
+
+    public static final int type() { return Question.TYPE_QCM; }
 
     public QuestionQCM(int gameID, int exerciseID, int id, int score, String question, ArrayList<String> reponses, ArrayList<Boolean> answers, boolean showAnswersCount) {
         super(gameID, exerciseID, id,score);

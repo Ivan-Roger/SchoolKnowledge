@@ -14,14 +14,15 @@ public class User {
     private static int lastID=0;
 
     public User(int id, String name,int pic) {
-        lastID=Math.max(lastID,id);
+        lastID=Math.max(lastID,id)+1;
+        this.id=id;
         this.name = name;
         this.pic = pic;
         scores = new HashMap<String,Integer>();
     }
 
     public static int getNextID() {
-        return lastID++;
+        return lastID;
     }
 
     public int getID() { return id; }

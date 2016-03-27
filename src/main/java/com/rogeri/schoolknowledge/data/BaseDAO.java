@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 /**
  * Created by rogeri on 22/03/16.
  */
-public abstract class DAOBase {
+public abstract class BaseDAO {
 
     // TAG pour le log
     private static final String TAG = "DBAdapter";
@@ -18,7 +18,7 @@ public abstract class DAOBase {
 
 
     // refaire avec getWritableDatabase(); et getReadableDatabase();
-    public DAOBase(Context context) {
+    public BaseDAO(Context context) {
         databaseHelper = new DBHelper(context, null);
     }
 

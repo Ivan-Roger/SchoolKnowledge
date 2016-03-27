@@ -34,7 +34,7 @@ public class Game {
     public int getPic() { return picID; }
 
     public Exercise getExercise(int level) {
-        return ((Exercise[])exercises.toArray())[level];
+        return (Exercise)exercises.toArray()[level];
     }
 
     public int getExerciseCount() {

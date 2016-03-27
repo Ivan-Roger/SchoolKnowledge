@@ -1,5 +1,7 @@
 package com.rogeri.schoolknowledge.data;
 
+import android.util.Log;
+
 import com.rogeri.schoolknowledge.model.User;
 
 import java.util.ArrayList;
@@ -7,11 +9,11 @@ import java.util.ArrayList;
 /**
  * Created by Ivan on 15/03/2016.
  */
-public class UserDAO {
+public class DAOUser {
     private ArrayList<User> users = new ArrayList<>();
 
-    public UserDAO() {
-        User user = new User(0,"User 01",0);
+    public DAOUser() {
+        User user = new User(User.getNextID(),"User 01",0);
         users.add(user);
         user = new User(User.getNextID(),"User 02",1);
         users.add(user);
@@ -30,6 +32,7 @@ public class UserDAO {
     }
 
     public User getJoueur(int id) {
+        Log.d("--- DAO ----- DEBUG ---", "GET User("+id+")");
         return users.get(id);
     }
 
