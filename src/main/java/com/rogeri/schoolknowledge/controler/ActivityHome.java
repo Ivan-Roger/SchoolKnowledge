@@ -3,6 +3,7 @@ package com.rogeri.schoolknowledge.controler;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -79,6 +80,12 @@ public class ActivityHome extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Jeu avec "+Main.userDAO.getJoueur(playerID).getName(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+
     }
 
     private void playGame(Game g) {

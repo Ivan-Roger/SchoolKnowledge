@@ -18,5 +18,6 @@
     <string name="new_user_submit">Créer le compte</string>
 
     <string name="wrong_username">Nom invalide !</string>
-    <string name="title_activity_main">MainActivity</string>
+
+    <string name="play_game_label">Séléctionnez un jeu:</string>
 </resources>
