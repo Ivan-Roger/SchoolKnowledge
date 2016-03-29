@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.rogeri.schoolknowledge.R;
 import com.rogeri.schoolknowledge.data.DAOGame;
+import com.rogeri.schoolknowledge.data.DAOQuestionQCM;
 import com.rogeri.schoolknowledge.model.Exercise;
 import com.rogeri.schoolknowledge.model.Game;
 import com.rogeri.schoolknowledge.model.Question;
@@ -30,7 +31,7 @@ public class ActivityLevelSelection extends AppCompatActivity {
         game = gameDAO.getGame(getIntent().getIntExtra(EXTRA_GAME_ID,-1));
 
         ImageView pic = (ImageView) findViewById(R.id.level_game_pic);
-        pic.setImageResource(ActivityHome.GAME_PICTURES[game.getPic()]);
+        pic.setImageResource(Game.GAME_PICTURES[game.getPic()]);
 
         TextView name = (TextView) findViewById(R.id.level_game_name);
         name.setText(game.getName());
@@ -51,13 +52,16 @@ public class ActivityLevelSelection extends AppCompatActivity {
     }
 
     public void onLevelSelected(int level) {
+        Toast.makeText(this, "Level: "+level, Toast.LENGTH_SHORT).show();
+        DAOQuestionQCM questionDAO = new DAOQuestionQCM(this);
         Exercise e = game.getExercise(level);
-        Question q = e.getQuestion(0);
+        Question q = questionDAO.getQuestionById(e.getQuestionID(0));
         Intent intent;
         if (q instanceof QuestionQCM)
             intent = new Intent(this, ActivityQCM.class);
         else return;
         // Ajouter les autres types de questions dans ce if
+        intent.putExtra(ActivityQCM.EXTRA_QUESTION_ID,e.getQuestionID(0));
         startActivity(intent);
     }
 }

@@ -11,7 +11,7 @@ import android.util.Log;
 public class DBHelper extends SQLiteOpenHelper {
 
     // VERSION de la bdd, permet les mises à jour des tables et champs au lancement de l'application
-    private static final int VERSION = 0;
+    private static final int VERSION = 1;
 
     // NOM de la base
     private static final String DATABASE_NAME = "database_rogeri_schoolknowledge";
@@ -30,12 +30,11 @@ public class DBHelper extends SQLiteOpenHelper {
         // Créer la table question
         db.execSQL(DAOQuestionQCM.CREATE_TABLE);
 
-        /*
+
         // Insérer les données
         for (String insert : DAOQuestionQCM.getInsertSQL()) {
             db.execSQL(insert);
         }
-        */
 
     }
 

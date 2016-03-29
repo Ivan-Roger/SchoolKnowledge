@@ -1,5 +1,6 @@
 package com.rogeri.schoolknowledge.model;
 
+import com.rogeri.schoolknowledge.R;
 import com.rogeri.schoolknowledge.model.Exercise;
 
 import java.io.Serializable;
@@ -16,6 +17,7 @@ public class Game {
     private final Collection<Exercise> exercises;
     private final String info;
 
+    public static final int[] GAME_PICTURES = {R.mipmap.app_logo, R.mipmap.game_icon_0};
 
     public Game(int id, String name, int picID, Collection<Exercise> exercises, String info) {
         this.id = id;

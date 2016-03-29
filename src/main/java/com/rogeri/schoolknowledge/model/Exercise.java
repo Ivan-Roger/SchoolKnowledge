@@ -1,5 +1,9 @@
 package com.rogeri.schoolknowledge.model;
 
+import android.content.Context;
+
+import com.rogeri.schoolknowledge.data.DAOExercise;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,25 +13,12 @@ import java.util.Collection;
  */
 public class Exercise {
     private final String id;
-    private final int level;
-    private final Collection<Question> questions;
+    private DAOExercise dao;
 
-    public Exercise(int id, int gameID, int level, Collection<Question> questions) {
+    public Exercise(int gameID, int id, Context context) {
         this.id = gameID+":"+id;
-        this.level = level;
-        this.questions = questions;
+        dao = new DAOExercise(context);
     }
 
     public String getID() { return id; }
-
-    public int getLevel() { return level; }
-
-    public int getLength() {
-        return 0;
-    }
-
-    public Question getQuestion(int id) {
-        if (questions==null) return null;
-        return (Question)questions.toArray()[id];
-    }
 }

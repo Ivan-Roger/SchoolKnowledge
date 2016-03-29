@@ -23,8 +23,6 @@ public class ActivityHome extends AppCompatActivity {
     public static final int LOGIN_MODE_ANONYMOUS = 1;
     public static final String EXTRA_PLAYER_ID = "playerID";
 
-    public static final int[] GAME_PICTURES = {R.mipmap.app_logo};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +51,7 @@ public class ActivityHome extends AppCompatActivity {
             });
 
             if (loginMode==LOGIN_MODE_ANONYMOUS) {
-                Toast.makeText(this, "Jeu en Invité", Toast.LENGTH_SHORT).show();
+                // Nothing yet
             } else if (loginMode==LOGIN_MODE_USER) {
                 DAOUser userDAO = new DAOUser();
                 User u = userDAO.getJoueur(playerID);
@@ -63,9 +61,6 @@ public class ActivityHome extends AppCompatActivity {
                 name.setText(u.getName());
                 TextView info = (TextView) findViewById(R.id.home_user_info);
                 info.setText("Score: "+u.getTotalScore());
-                Toast.makeText(this, "Jeu avec "+playerID+": "+u.getName(), Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show();
             }
         } else {
             // Premier lancement: Connexion

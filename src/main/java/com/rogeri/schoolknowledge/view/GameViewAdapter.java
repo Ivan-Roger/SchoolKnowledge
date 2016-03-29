@@ -55,7 +55,7 @@ public class GameViewAdapter extends ArrayAdapter<Game> {
         userName.setText(item.getName());
 
         ImageView userPic = (ImageView) userView.findViewById(R.id.user_template_pic);
-        userPic.setImageResource(ActivityHome.GAME_PICTURES[item.getPic()]);
+        userPic.setImageResource(Game.GAME_PICTURES[item.getPic()]);
 
         TextView userScore = (TextView) userView.findViewById(R.id.user_template_info);
         userScore.setText(item.getInfo());

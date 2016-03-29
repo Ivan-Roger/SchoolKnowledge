@@ -15,10 +15,12 @@ public abstract class BaseDAO {
     //
     private SQLiteDatabase db;
     private DBHelper databaseHelper;
+    protected Context context;
 
 
     // refaire avec getWritableDatabase(); et getReadableDatabase();
     public BaseDAO(Context context) {
+        this.context = context;
         databaseHelper = new DBHelper(context, null);
     }
 
