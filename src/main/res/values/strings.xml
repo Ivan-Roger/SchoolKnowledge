@@ -17,5 +17,7 @@
 
     <string name="wrong_username">Nom invalide !</string>
 
+    <string name="play_game_label">Séléctionnez un jeu:</string>
+
     <string name="level_select">Séléctionnez un niveau</string>
 </resources>

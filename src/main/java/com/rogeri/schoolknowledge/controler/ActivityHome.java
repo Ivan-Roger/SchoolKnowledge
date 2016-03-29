@@ -3,6 +3,7 @@ package com.rogeri.schoolknowledge.controler;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -67,6 +68,12 @@ public class ActivityHome extends AppCompatActivity {
             Intent intent = new Intent(this, ActivityLogin.class);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+
     }
 /*
     @Override
