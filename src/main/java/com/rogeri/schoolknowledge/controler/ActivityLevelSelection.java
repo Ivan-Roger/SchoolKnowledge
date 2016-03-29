@@ -55,13 +55,13 @@ public class ActivityLevelSelection extends AppCompatActivity {
         Toast.makeText(this, "Level: "+level, Toast.LENGTH_SHORT).show();
         DAOQuestionQCM questionDAO = new DAOQuestionQCM(this);
         Exercise e = game.getExercise(level);
-        Question q = questionDAO.getQuestionById(e.getQuestionID(0));
+        Question q = questionDAO.retrieveByID(e.getID()+":0");
         Intent intent;
         if (q instanceof QuestionQCM)
             intent = new Intent(this, ActivityQCM.class);
         else return;
         // Ajouter les autres types de questions dans ce if
-        intent.putExtra(ActivityQCM.EXTRA_QUESTION_ID,e.getQuestionID(0));
+        intent.putExtra(ActivityQCM.EXTRA_QUESTION_ID,e.getID());
         startActivity(intent);
     }
 }

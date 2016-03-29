@@ -110,14 +110,14 @@ public class DAOQuestionQCM extends BaseDAO {
         return removeByID(question.getID());
     }
 
-    public List<Question> selectAll() {
+    public List<QuestionQCM> selectAll() {
         //Récupère dans un Cursor les valeur correspondant à des enregistrements de question contenu dans la BD
         Cursor cursor = getDB().rawQuery("SELECT * FROM " + TABLE_NAME, null);
 
         return cursorToListQuestion(cursor);
     }
 
-    public Question retrieveByID(String id) {
+    public QuestionQCM retrieveByID(String id) {
         //Récupère dans un Cursor les valeur correspondant à une question contenu dans la BD à l'aide de son id
         String [] p =  {id};
         Cursor cursor = getDB().rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_ID + "=?", p);
@@ -126,9 +126,9 @@ public class DAOQuestionQCM extends BaseDAO {
     }
 
     //Cette méthode permet de convertir un cursor en une liste de questions
-    private List<Question> cursorToListQuestion(Cursor cursor) {
+    private List<QuestionQCM> cursorToListQuestion(Cursor cursor) {
         // Declaration et initialisation d'une liste de question
-        ArrayList<Question> liste = new ArrayList<>();
+        ArrayList<QuestionQCM> liste = new ArrayList<>();
 
         while (cursor.moveToNext()) {
             // Création d'une question et ajout dans la liste
@@ -140,7 +140,7 @@ public class DAOQuestionQCM extends BaseDAO {
         return liste;
     }
 
-    private Question cursorToQuestion(Cursor cursor) {
+    private QuestionQCM cursorToQuestion(Cursor cursor) {
         // Récupére l'index des champs
         int indexGameId = cursor.getColumnIndex(COL_GAME_ID);
         int indexLevelId = cursor.getColumnIndex(COL_LEVEL_ID);
@@ -161,9 +161,9 @@ public class DAOQuestionQCM extends BaseDAO {
     }
 
     //Cette méthode permet de convertir un cursor en une question
-    private Question cursorToFirstQuestion(Cursor cursor) {
+    private QuestionQCM cursorToFirstQuestion(Cursor cursor) {
         // Declaration d'une question
-        Question question = null;
+        QuestionQCM question = null;
 
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();

@@ -27,7 +27,7 @@ public class DAOExercise extends BaseDAO {
     public static final String CREATE_TABLE = "CREATE_TABLE "+TABLE_NAME+" ("+
             COL_GAME_ID+" INTEGER PRIMARY KEY,"+
             COL_ID+" INTEGER PRIMARY KEY,"+
-            COL_LEVEL+" INTEGER"+
+            COL_LEVEL+" VARCHAR(50)"+
             ");";
 
     public static final String DROP_TABLE = "DROP_TABLE "+TABLE_NAME+" IF EXISTS;";
@@ -68,6 +68,7 @@ public class DAOExercise extends BaseDAO {
         String[] ids = exo.getID().split(":");
         values.put(COL_GAME_ID, ids[0]);
         values.put(COL_ID, ids[1]);
+        values.put(COL_LEVEL, exo.getName());
 
         // Insertion de l'objet dans la BD via le ContentValues
         return getDB().insert(TABLE_NAME, null, values);
@@ -81,6 +82,7 @@ public class DAOExercise extends BaseDAO {
         String[] ids = exo.getID().split(":");
         values.put(COL_GAME_ID, ids[0]);
         values.put(COL_ID, ids[1]);
+        values.put(COL_LEVEL, exo.getName());
 
         // Insertion de l'objet dans la BD via le ContentValues et l'identifiant
         String where = COL_GAME_ID + " = " + ids[0] + " AND " + COL_ID + " = " + ids[1];
@@ -91,7 +93,7 @@ public class DAOExercise extends BaseDAO {
         //Suppression d'une question de la BD à partir de l'ID
         String[] ids = id.split(":");
         String where = COL_GAME_ID + " = " + ids[0] + " AND " + COL_ID + " = " + ids[1];
-        return getDB().delete(TABLE_NAME, COL_ID + " = " + id, null);
+        return getDB().delete(TABLE_NAME, where, null);
     }
 
     public int remove(Exercise exo) {
@@ -132,10 +134,12 @@ public class DAOExercise extends BaseDAO {
         // Récupére l'index des champs
         int indexGameId = cursor.getColumnIndex(COL_GAME_ID);
         int indexId = cursor.getColumnIndex(COL_ID);
+        int indexLevel = cursor.getColumnIndex(COL_LEVEL);
 
         int gameID = cursor.getInt(indexGameId);
         int id = cursor.getInt(indexId);
-        return new Exercise(gameID,id,this.context);
+        String level = cursor.getString(indexLevel);
+        return new Exercise(gameID,id,level,this.context);
     }
 
     //Cette méthode permet de convertir un cursor en une question

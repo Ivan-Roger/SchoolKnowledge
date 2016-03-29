@@ -24,7 +24,7 @@ public class ActivityQCM extends AppCompatActivity {
         setContentView(R.layout.activity_question_qcm);
 
         DAOQuestionQCM dao = new DAOQuestionQCM(this);
-        question = dao.getQuestionById(getIntent().getStringExtra(EXTRA_QUESTION_ID));
+        question = dao.retrieveByID(getIntent().getStringExtra(EXTRA_QUESTION_ID));
 
         // On affiche le texte de la question //
         TextView qView = (TextView) findViewById(R.id.question_qcm_question_text);

@@ -13,12 +13,16 @@ import java.util.Collection;
  */
 public class Exercise {
     private final String id;
+    private final String name;
     private DAOExercise dao;
 
-    public Exercise(int gameID, int id, Context context) {
+    public Exercise(int gameID, int id, String name, Context context) {
         this.id = gameID+":"+id;
+        this.name = name;
         dao = new DAOExercise(context);
     }
 
     public String getID() { return id; }
+
+    public String getName() { return name; }
 }
