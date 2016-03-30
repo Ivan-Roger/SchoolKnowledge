@@ -18,21 +18,20 @@ import java.util.List;
  * Created by rogeri on 18/03/16.
  */
 public class DAOExercise extends BaseDAO {
-    private static final String TABLE_NAME = "Exercise";
+    public static final String TABLE_NAME = "Exercise";
 
     private static final String COL_GAME_ID = "gameID";
-    private static final String COL_ID = "id";
+    public static final String COL_ID = "id"; // Public: it's a new ID
     private static final String COL_LEVEL = "level";
 
     public static final String CREATE_TABLE = "CREATE_TABLE "+TABLE_NAME+" ("+
             COL_GAME_ID+" INTEGER PRIMARY KEY,"+
             COL_ID+" INTEGER PRIMARY KEY,"+
-            COL_LEVEL+" VARCHAR(50)"+
+            COL_LEVEL+" VARCHAR(50),"+
+            "FOREIGN KEY("+COL_GAME_ID+") REFERENCES "+DAOGame.TABLE_NAME+"("+DAOGame.COL_ID+"),"+
             ");";
 
     public static final String DROP_TABLE = "DROP_TABLE "+TABLE_NAME+" IF EXISTS;";
-
-    public HashMap<String,QuestionQCM> questions = new HashMap<>();
 
     public DAOExercise(Context ctx) {
         super(ctx);
@@ -113,6 +112,14 @@ public class DAOExercise extends BaseDAO {
         Cursor cursor = getDB().rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_ID + "=?", p);
 
         return cursorToFirstExercise(cursor);
+    }
+
+    public List<Exercise> listByGameID(int id) {
+        //Récupère dans un Cursor les valeur correspondant à une question contenu dans la BD à l'aide de son id
+        String [] p =  {Integer.toString(id)};
+        Cursor cursor = getDB().rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_GAME_ID + "=?", p);
+
+        return cursorToListExercise(cursor);
     }
 
     //Cette méthode permet de convertir un cursor en une liste de questions

@@ -16,7 +16,7 @@ import java.util.List;
  * Created by rogeri on 18/03/16.
  */
 public class DAOQuestionQCM extends BaseDAO {
-    private static final String TABLE_NAME = "QuestionQCM";
+    public static final String TABLE_NAME = "QuestionQCM";
 
     private static final String COL_GAME_ID = "gameID";
     private static final String COL_LEVEL_ID = "levelID";
@@ -31,11 +31,14 @@ public class DAOQuestionQCM extends BaseDAO {
             COL_GAME_ID+" INTEGER PRIMARY KEY,"+
             COL_LEVEL_ID+" INTEGER PRIMARY KEY,"+
             COL_ID+" INTEGER PRIMARY KEY,"+
-            COL_QUESTION+" VARCHAR(255)"+
-            COL_REPONSES+" VARCHAR(511)"+
-            COL_ANSWERS+" VARCHAR(255)"+
-            COL_SHOW_COUNT+" INTEGER"+
-            COL_SCORE+" INTEGER"+
+            COL_QUESTION+" VARCHAR(255),"+
+            COL_REPONSES+" VARCHAR(511),"+
+            COL_ANSWERS+" VARCHAR(255),"+
+            COL_SHOW_COUNT+" INTEGER,"+
+            COL_SCORE+" INTEGER,"+
+            "FOREIGN KEY("+COL_GAME_ID+") REFERENCES "+DAOGame.TABLE_NAME+"("+DAOGame.COL_ID+"),"+
+            "FOREIGN KEY("+COL_LEVEL_ID+") REFERENCES "+DAOExercise.TABLE_NAME+"("+DAOExercise.COL_ID+"),"+
+            "FOREIGN KEY("+COL_ID+") REFERENCES "+DAOQuestion.TABLE_NAME+"("+DAOQuestion.COL_ID+")"+
         ");";
 
     public static final String DROP_TABLE = "DROP_TABLE "+TABLE_NAME+" IF EXISTS;";

@@ -13,17 +13,15 @@ import java.util.Collection;
 public class Game {
     private final int id;
     private final String name;
-    private final int picID;
-    private final Collection<Exercise> exercises;
     private final String info;
+    private final int picID;
 
     public static final int[] GAME_PICTURES = {R.mipmap.app_logo, R.mipmap.game_icon_0};
 
-    public Game(int id, String name, int picID, Collection<Exercise> exercises, String info) {
+    public Game(int id, String name, String info, int picID) {
         this.id = id;
         this.name = name;
         this.picID = picID;
-        this.exercises = exercises;
         this.info = info;
     }
 
@@ -34,12 +32,4 @@ public class Game {
     public String getInfo() { return info; }
 
     public int getPic() { return picID; }
-
-    public Exercise getExercise(int level) {
-        return (Exercise)exercises.toArray()[level];
-    }
-
-    public int getExerciseCount() {
-        return exercises.size();
-    }
 }
