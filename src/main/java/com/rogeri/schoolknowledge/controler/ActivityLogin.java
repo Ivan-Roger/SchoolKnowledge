@@ -55,7 +55,6 @@ public class ActivityLogin extends AppCompatActivity {
         Intent intent = new Intent(this, ActivityHome.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(ActivityHome.EXTRA_LOGIN_MODE, ActivityHome.LOGIN_MODE_USER);
-        Log.d("--- LOGIN --- DEBUG ---", "GET User(" + u.getID() + ")");
         intent.putExtra(ActivityHome.EXTRA_PLAYER_ID, u.getID());
         startActivity(intent);
     }

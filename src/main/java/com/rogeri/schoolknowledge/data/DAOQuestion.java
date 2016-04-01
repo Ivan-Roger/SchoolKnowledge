@@ -34,7 +34,7 @@ public class DAOQuestion extends BaseDAO {
             "FOREIGN KEY("+COL_LEVEL_ID+") REFERENCES "+DAOExercise.TABLE_NAME+"("+DAOExercise.COL_ID+")"+
             ");";
 
-    public static final String DROP_TABLE = "DROP TABLE "+TABLE_NAME+" IF EXISTS;";
+    public static final String DROP_TABLE = "DROP TABLE IF EXISTS '"+TABLE_NAME+"';";
 
     private static final String QUESTION_TYPE_QCM = "QuestionQCM";
 
@@ -50,7 +50,12 @@ public class DAOQuestion extends BaseDAO {
                 //  ID   Name  Info
                 "0, 0, 0, '"+QUESTION_TYPE_QCM+"'",
                 "0, 0, 1, '"+QUESTION_TYPE_QCM+"'",
-                "0, 0, 2, '"+QUESTION_TYPE_QCM+"'"
+                "0, 0, 2, '"+QUESTION_TYPE_QCM+"'",
+                "0, 1, 0, '"+QUESTION_TYPE_QCM+"'",
+                "0, 1, 1, '"+QUESTION_TYPE_QCM+"'",
+                "0, 1, 2, '"+QUESTION_TYPE_QCM+"'",
+                "0, 2, 0, '"+QUESTION_TYPE_QCM+"'",
+                "0, 2, 1, '"+QUESTION_TYPE_QCM+"'"
         };
         //
         String[] liste = new String[DATA.length];

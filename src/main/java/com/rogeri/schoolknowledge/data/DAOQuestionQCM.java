@@ -32,7 +32,7 @@ public class DAOQuestionQCM extends BaseDAO {
             COL_GAME_ID+" INTEGER,"+
             COL_LEVEL_ID+" INTEGER,"+
             COL_ID+" INTEGER,"+
-            COL_QUESTION+" VARCHAR(255),"+
+            COL_QUESTION+" VARCHAR(511),"+
             COL_REPONSES+" VARCHAR(511),"+
             COL_ANSWERS+" VARCHAR(255),"+
             COL_SHOW_COUNT+" INTEGER,"+
@@ -43,7 +43,7 @@ public class DAOQuestionQCM extends BaseDAO {
             "FOREIGN KEY("+COL_ID+") REFERENCES "+DAOQuestion.TABLE_NAME+"("+DAOQuestion.COL_ID+")"+
         ");";
 
-    public static final String DROP_TABLE = "DROP TABLE "+TABLE_NAME+" IF EXISTS;";
+    public static final String DROP_TABLE = "DROP TABLE IF EXISTS '"+TABLE_NAME+"';";
 
     public DAOQuestionQCM(Context ctx) {
         super(ctx);
@@ -54,10 +54,15 @@ public class DAOQuestionQCM extends BaseDAO {
         String insertSQL = "INSERT INTO " + TABLE_NAME + " VALUES ";
 
         String[] DATA = {
-                //  IDs  Score  Question   Reponses   Answers   ShowCount
-                "0, 0, 0, 10, 'Question 1', '\"Rep A\", \"Rep B\", \"Rep C\"', '\"false\", \"true\", \"false\"', 0",
-                "0, 0, 1, 15, 'Question 2', '\"Yay\", \"Meh\", \"Poy\"', '\"true\", \"false\", \"true\"', 0",
-                "0, 0, 2, 12, 'Question 3', '\"4\", \"8\", \"15\"', '\"false\", \"false\", \"true\"', 0"
+                //  IDs     Question   Reponses    Answers    ShowCount    Score
+                "0, 0, 0, 'Question 1', '\"Rep A\", \"Rep B\", \"Rep C\"', '\"false\", \"true\", \"false\"', 0, 10",
+                "0, 0, 1, 'Question 2', '\"Yay\", \"Meh\", \"Poy\"', '\"true\", \"false\", \"true\"', 1, 12",
+                "0, 0, 2, 'Quel est le premier chiffre de la serie des nombres de Lost ?', '\"8\", \"4\", \"15\"', '\"false\", \"true\", \"false\"', 1, 11",
+                "0, 1, 0, 'Quel mot est familier ?', '\"Bonjour\", \"Aurevoir\", \"Salut\"', '\"false\", \"false\", \"true\"', 1, 11",
+                "0, 1, 1, 'De quand date la prise de la bastille ?', '\"1789\", \"2012\", \"1524\"', '\"true\", \"false\", \"false\"', 1, 5",
+                "0, 1, 2, 'Parmis la liste ci-dessous lesquels ne sont PAS des fruits ?', '\"Vanille\", \"Citron\", \"Pistache\"', '\"true\", \"false\", \"true\"', 0, 11",
+                "0, 2, 0, 'Question 1', '\"4\", \"8\", \"15\"', '\"false\", \"false\", \"true\"', 0, 11",
+                "0, 2, 1, 'Question 2', '\"4\", \"8\", \"15\"', '\"false\", \"false\", \"true\"', 0, 11"
         };
         //
         String[] liste = new String[DATA.length];
@@ -169,8 +174,6 @@ public class DAOQuestionQCM extends BaseDAO {
         boolean showCount = cursor.getInt(indexShowCount)==1;
         QuestionQCM q = new QuestionQCM(id,score,quest,rep,ans,showCount);
         Log.d("DAO-" + TABLE_NAME, "Found question => "+ q);
-        // TODO: Remove
-        q.debug();
         return q;
     }
 

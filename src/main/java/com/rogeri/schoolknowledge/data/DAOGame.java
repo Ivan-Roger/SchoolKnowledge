@@ -30,7 +30,7 @@ public class DAOGame extends BaseDAO {
             COL_PIC+" INTEGER"+
             ");";
 
-    public static final String DROP_TABLE = "DROP TABLE "+TABLE_NAME+" IF EXISTS;";
+    public static final String DROP_TABLE = "DROP TABLE IF EXISTS '"+TABLE_NAME+"';";
 
     public DAOGame(Context ctx) {
         super(ctx);

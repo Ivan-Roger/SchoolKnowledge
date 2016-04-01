@@ -11,7 +11,7 @@ import android.util.Log;
 public class DBHelper extends SQLiteOpenHelper {
 
     // VERSION de la bdd, permet les mises à jour des tables et champs au lancement de l'application
-    private static final int VERSION = 5;
+    private static final int VERSION = 11;
 
     // NOM de la base
     private static final String DATABASE_NAME = "database_rogeri_schoolknowledge";

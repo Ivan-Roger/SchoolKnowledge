@@ -1,10 +1,5 @@
 package com.rogeri.schoolknowledge.model;
 
-import android.util.Log;
-
-import com.rogeri.schoolknowledge.controler.ActivityQCM;
-import com.rogeri.schoolknowledge.model.Question;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -49,7 +44,7 @@ public class QuestionQCM extends Question {
     }
 
     public String getQuestion() {
-        return question+" | "+getID();
+        return question;
     }
 
     public List<String> getReponses() { return reponses; }
@@ -62,12 +57,6 @@ public class QuestionQCM extends Question {
                 res+=", ";
         }
         return res;
-    }
-
-    public void debug() {
-        Log.d("QuestionQCM-DEBUG", "Question: "+question);
-        Log.d("QuestionQCM-DEBUG", "showCount: "+showCount);
-        //Log.d("QuestionQCM-DEBUG", "Question: "+question);
     }
 
     public List<Boolean> getAnswers() { return answers; }
@@ -92,7 +81,7 @@ public class QuestionQCM extends Question {
     }
 
     private static String[] stringToArray(String s) {
-        return s.substring(1,s.length()-2).split("\", \"");
+        return s.substring(1,s.length()-1).split("\", \"");
     }
     private static Boolean[] stringToBoolArray(String s) {
         String [] arr = stringToArray(s);

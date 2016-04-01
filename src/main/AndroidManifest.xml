@@ -26,7 +26,10 @@
             android:name=".controler.ActivityLevelSelection"
             android:label="Niveau" />
         <activity
-            android:name=".controler.ActivityQCM"
+            android:name=".controler.ActivityExercise"
+            android:label="Résultats" />
+        <activity
+            android:name=".controler.ActivityQuestionQCM"
             android:label="Question" />
     </application>
 

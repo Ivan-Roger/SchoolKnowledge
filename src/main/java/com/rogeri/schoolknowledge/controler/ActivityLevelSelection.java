@@ -1,5 +1,6 @@
 package com.rogeri.schoolknowledge.controler;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -44,7 +45,6 @@ public class ActivityLevelSelection extends AppCompatActivity {
         GridLayout grid = (GridLayout) findViewById(R.id.level_selection_grid);
         DAOExercise exerciseDAO = new DAOExercise(this);
         List<Exercise> exos = exerciseDAO.listByGameID(game.getID());
-        int i=0;
         for (Exercise e: exos) {
             Button v = new Button(this);
             v.setText(e.getName());
@@ -59,29 +59,9 @@ public class ActivityLevelSelection extends AppCompatActivity {
         }
     }
 
-    public void onLevelSelected(String level) {
-        try {
-            Toast.makeText(this, "Level: "+level, Toast.LENGTH_SHORT).show();
-            DAOQuestion questionDAO = new DAOQuestion(this);
-            List<Question> q = questionDAO.listByExerciseID(level);
-
-            Log.d("LevelSelection-DEBUG","Found "+q.size()+" question for level "+level);
-
-            Intent intent;
-            // Ajouter les autres types de questions dans ce if
-            if (q.size()>0) {
-                Question q0 = q.get(0);
-                if (q0.type() == Question.TYPE_QCM)
-                    intent = new Intent(this, ActivityQCM.class);
-                else
-                    throw new Exception("LevelSelection: Undefined question type");
-
-                intent.putExtra(ActivityQCM.EXTRA_QUESTION_ID,q0.getID());
-                startActivity(intent);
-            } else
-                throw new Exception("LevelSelection: No question for level "+level);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void onLevelSelected(String level) {
+        Intent intent = new Intent(this, ActivityExercise.class);
+        intent.putExtra(ActivityExercise.EXTRA_EXERCISE_ID,level);
+        startActivity(intent);
     }
 }

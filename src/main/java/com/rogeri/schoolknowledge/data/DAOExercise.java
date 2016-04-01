@@ -32,7 +32,7 @@ public class DAOExercise extends BaseDAO {
             "FOREIGN KEY("+COL_GAME_ID+") REFERENCES "+DAOGame.TABLE_NAME+"("+DAOGame.COL_ID+")"+
             ");";
 
-    public static final String DROP_TABLE = "DROP TABLE "+TABLE_NAME+" IF EXISTS;";
+    public static final String DROP_TABLE = "DROP TABLE IF EXISTS '"+TABLE_NAME+"';";
 
     public DAOExercise(Context ctx) {
         super(ctx);
@@ -107,10 +107,12 @@ public class DAOExercise extends BaseDAO {
         return cursorToListExercise(cursor);
     }
 
-    public Exercise retrieveByID(String id) {
+    public Exercise retrieveByID(String id) throws Exception {
         //Récupère dans un Cursor les valeur correspondant à une question contenu dans la BD à l'aide de son id
-        String [] p =  {id};
-        Cursor cursor = getDB().rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_ID + "=?", p);
+        String [] p =  id.split(":");
+        if(p.length!=2) throw new Exception("DAO-"+TABLE_NAME+": Invalid id.");
+        String where = COL_GAME_ID + "=? AND "+COL_ID+"=?";
+        Cursor cursor = getDB().rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + where, p);
 
         return cursorToFirstExercise(cursor);
     }
@@ -147,7 +149,9 @@ public class DAOExercise extends BaseDAO {
         int gameID = cursor.getInt(indexGameId);
         int id = cursor.getInt(indexId);
         String level = cursor.getString(indexLevel);
-        return new Exercise(gameID,id,level,this.context);
+        Exercise res = new Exercise(gameID,id,level,this.context);
+        Log.d("DAO-"+TABLE_NAME,"Found exercise "+res+", id: "+res.getID()+" with name \""+res.getName()+"\".");
+        return res;
     }
 
     //Cette méthode permet de convertir un cursor en une question

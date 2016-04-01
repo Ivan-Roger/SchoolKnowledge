@@ -32,7 +32,6 @@ public class DAOUser {
     }
 
     public User getJoueur(int id) {
-        Log.d("--- DAO ----- DEBUG ---", "GET User("+id+")");
         return users.get(id);
     }
 

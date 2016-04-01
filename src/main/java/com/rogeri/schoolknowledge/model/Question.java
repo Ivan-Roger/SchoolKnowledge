@@ -16,6 +16,12 @@ public abstract class Question {
 
     abstract public int type();
     public String getID() { return id; }
+    public String nextId() {
+        String[] ids = id.split(":");
+        int nID = Integer.parseInt(ids[2])+1;
+
+        return ids[0]+":"+ids[1]+":"+nID;
+    }
     public int getScore() {
         return score;
     }

@@ -46,7 +46,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:id="@+id/question_qcm_answers_frame"></LinearLayout>
+        android:id="@+id/question_qcm_answers_frame">
+    </LinearLayout>
 
     <Button
         android:layout_width="match_parent"
@@ -54,7 +55,8 @@
         android:text="Continuer"
         android:id="@+id/question_qcm_next_button"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="onNext" />
 
     <TextView
         android:layout_width="wrap_content"
