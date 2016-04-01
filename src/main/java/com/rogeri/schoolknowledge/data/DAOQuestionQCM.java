@@ -3,6 +3,7 @@ package com.rogeri.schoolknowledge.data;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 import com.rogeri.schoolknowledge.model.Question;
 import com.rogeri.schoolknowledge.model.QuestionQCM;
@@ -27,21 +28,22 @@ public class DAOQuestionQCM extends BaseDAO {
     private static final String COL_SHOW_COUNT = "showCount";
     private static final String COL_SCORE = "score";
 
-    public static final String CREATE_TABLE = "CREATE_TABLE "+TABLE_NAME+" ("+
-            COL_GAME_ID+" INTEGER PRIMARY KEY,"+
-            COL_LEVEL_ID+" INTEGER PRIMARY KEY,"+
-            COL_ID+" INTEGER PRIMARY KEY,"+
+    public static final String CREATE_TABLE = "CREATE TABLE "+TABLE_NAME+" ("+
+            COL_GAME_ID+" INTEGER,"+
+            COL_LEVEL_ID+" INTEGER,"+
+            COL_ID+" INTEGER,"+
             COL_QUESTION+" VARCHAR(255),"+
             COL_REPONSES+" VARCHAR(511),"+
             COL_ANSWERS+" VARCHAR(255),"+
             COL_SHOW_COUNT+" INTEGER,"+
             COL_SCORE+" INTEGER,"+
+            "PRIMARY KEY("+COL_GAME_ID+", "+COL_LEVEL_ID+", "+COL_ID+"),"+
             "FOREIGN KEY("+COL_GAME_ID+") REFERENCES "+DAOGame.TABLE_NAME+"("+DAOGame.COL_ID+"),"+
             "FOREIGN KEY("+COL_LEVEL_ID+") REFERENCES "+DAOExercise.TABLE_NAME+"("+DAOExercise.COL_ID+"),"+
             "FOREIGN KEY("+COL_ID+") REFERENCES "+DAOQuestion.TABLE_NAME+"("+DAOQuestion.COL_ID+")"+
         ");";
 
-    public static final String DROP_TABLE = "DROP_TABLE "+TABLE_NAME+" IF EXISTS;";
+    public static final String DROP_TABLE = "DROP TABLE "+TABLE_NAME+" IF EXISTS;";
 
     public DAOQuestionQCM(Context ctx) {
         super(ctx);
@@ -104,12 +106,15 @@ public class DAOQuestionQCM extends BaseDAO {
         return getDB().update(TABLE_NAME, values, where, null);
     }
 
-    public int removeByID(String id) {
+    public int removeByID(String id) throws Exception {
         //Suppression d'une question de la BD à partir de l'ID
-        return getDB().delete(TABLE_NAME, COL_ID + " = " + id, null);
+        String[] ids = id.split(":");
+        if (ids.length!=3) throw new Exception("DAO-"+TABLE_NAME+": Invalid id");
+        String where = COL_GAME_ID + " = " + ids[0] + " AND " + COL_LEVEL_ID + " = " + ids[1] + " AND " + COL_ID + " = " + ids[2];
+        return getDB().delete(TABLE_NAME, where, null);
     }
 
-    public int remove(QuestionQCM question) {
+    public int remove(QuestionQCM question) throws Exception {
         return removeByID(question.getID());
     }
 
@@ -120,10 +125,12 @@ public class DAOQuestionQCM extends BaseDAO {
         return cursorToListQuestion(cursor);
     }
 
-    public QuestionQCM retrieveByID(String id) {
+    public QuestionQCM retrieveByID(String id) throws Exception {
         //Récupère dans un Cursor les valeur correspondant à une question contenu dans la BD à l'aide de son id
-        String [] p =  {id};
-        Cursor cursor = getDB().rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_ID + "=?", p);
+        String [] p =  id.split(":");
+        if (p.length!=3) throw new Exception("DAO-"+TABLE_NAME+": Invalid id");
+        String where = COL_GAME_ID + " =? AND " + COL_LEVEL_ID + " =? AND " + COL_ID + " =?";
+        Cursor cursor = getDB().rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + where, p);
 
         return cursorToFirstQuestion(cursor);
     }
@@ -160,7 +167,11 @@ public class DAOQuestionQCM extends BaseDAO {
         String rep = cursor.getString(indexReponse);
         String ans = cursor.getString(indexAnswers);
         boolean showCount = cursor.getInt(indexShowCount)==1;
-        return new QuestionQCM(id,score,quest,rep,ans,showCount);
+        QuestionQCM q = new QuestionQCM(id,score,quest,rep,ans,showCount);
+        Log.d("DAO-" + TABLE_NAME, "Found question => "+ q);
+        // TODO: Remove
+        q.debug();
+        return q;
     }
 
     //Cette méthode permet de convertir un cursor en une question
@@ -173,7 +184,8 @@ public class DAOQuestionQCM extends BaseDAO {
 
             // Création d'une question
             question = cursorToQuestion(cursor);
-        }
+        } else
+            Log.d("DAO-" + TABLE_NAME, "Empty cursor");
 
         // Fermeture du cursor
         cursor.close();

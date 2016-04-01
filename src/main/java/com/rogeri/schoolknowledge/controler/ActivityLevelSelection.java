@@ -3,6 +3,7 @@ package com.rogeri.schoolknowledge.controler;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -25,7 +26,6 @@ import java.util.List;
 public class ActivityLevelSelection extends AppCompatActivity {
     public static final String EXTRA_GAME_ID = "gameID";
     private Game game;
-    private List<Exercise> exos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,15 +60,28 @@ public class ActivityLevelSelection extends AppCompatActivity {
     }
 
     public void onLevelSelected(String level) {
-        Toast.makeText(this, "Level: "+level, Toast.LENGTH_SHORT).show();
-        DAOQuestion questionDAO = new DAOQuestion(this);
-        List<Question> q = questionDAO.listByExerciseID(e.getID() + ":0");
-        Intent intent;
-        if (q instanceof QuestionQCM)
-            intent = new Intent(this, ActivityQCM.class);
-        else return;
-        // Ajouter les autres types de questions dans ce if
-        intent.putExtra(ActivityQCM.EXTRA_QUESTION_ID,e.getID());
-        startActivity(intent);
+        try {
+            Toast.makeText(this, "Level: "+level, Toast.LENGTH_SHORT).show();
+            DAOQuestion questionDAO = new DAOQuestion(this);
+            List<Question> q = questionDAO.listByExerciseID(level);
+
+            Log.d("LevelSelection-DEBUG","Found "+q.size()+" question for level "+level);
+
+            Intent intent;
+            // Ajouter les autres types de questions dans ce if
+            if (q.size()>0) {
+                Question q0 = q.get(0);
+                if (q0.type() == Question.TYPE_QCM)
+                    intent = new Intent(this, ActivityQCM.class);
+                else
+                    throw new Exception("LevelSelection: Undefined question type");
+
+                intent.putExtra(ActivityQCM.EXTRA_QUESTION_ID,q0.getID());
+                startActivity(intent);
+            } else
+                throw new Exception("LevelSelection: No question for level "+level);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

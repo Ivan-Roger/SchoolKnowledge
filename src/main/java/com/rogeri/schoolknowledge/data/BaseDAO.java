@@ -22,6 +22,7 @@ public abstract class BaseDAO {
     public BaseDAO(Context context) {
         this.context = context;
         databaseHelper = new DBHelper(context, null);
+        open();
     }
 
     // On ouvre la base de données en écriture

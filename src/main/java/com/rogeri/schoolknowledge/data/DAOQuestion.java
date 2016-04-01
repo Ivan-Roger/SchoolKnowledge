@@ -3,6 +3,7 @@ package com.rogeri.schoolknowledge.data;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.util.Pair;
 
 import com.rogeri.schoolknowledge.model.Game;
@@ -23,16 +24,19 @@ public class DAOQuestion extends BaseDAO {
     public static final String COL_ID = "id"; // Public: it's a new ID
     private static final String COL_TYPE = "type";
 
-    public static final String CREATE_TABLE = "CREATE_TABLE "+TABLE_NAME+" ("+
-            COL_GAME_ID+" INTEGER PRIMARY KEY,"+
-            COL_LEVEL_ID+" INTEGER PRIMARY KEY,"+
-            COL_ID+" INTEGER PRIMARY KEY,"+
+    public static final String CREATE_TABLE = "CREATE TABLE "+TABLE_NAME+" ("+
+            COL_GAME_ID+" INTEGER,"+
+            COL_LEVEL_ID+" INTEGER,"+
+            COL_ID+" INTEGER,"+
             COL_TYPE+" VARCHAR(50),"+
+            "PRIMARY KEY("+COL_GAME_ID+", "+COL_LEVEL_ID+", "+COL_ID+"),"+
             "FOREIGN KEY("+COL_GAME_ID+") REFERENCES "+DAOGame.TABLE_NAME+"("+DAOGame.COL_ID+"),"+
             "FOREIGN KEY("+COL_LEVEL_ID+") REFERENCES "+DAOExercise.TABLE_NAME+"("+DAOExercise.COL_ID+")"+
             ");";
 
-    public static final String DROP_TABLE = "DROP_TABLE "+TABLE_NAME+" IF EXISTS;";
+    public static final String DROP_TABLE = "DROP TABLE "+TABLE_NAME+" IF EXISTS;";
+
+    private static final String QUESTION_TYPE_QCM = "QuestionQCM";
 
     public DAOQuestion(Context ctx) {
         super(ctx);
@@ -44,9 +48,9 @@ public class DAOQuestion extends BaseDAO {
 
         String[] DATA = {
                 //  ID   Name  Info
-                "0, 0, 0, 'QuestionQCM'",
-                "0, 0, 1, 'QuestionQCM'",
-                "0, 0, 2, 'QuestionQCM'"
+                "0, 0, 0, '"+QUESTION_TYPE_QCM+"'",
+                "0, 0, 1, '"+QUESTION_TYPE_QCM+"'",
+                "0, 0, 2, '"+QUESTION_TYPE_QCM+"'"
         };
         //
         String[] liste = new String[DATA.length];
@@ -71,9 +75,11 @@ public class DAOQuestion extends BaseDAO {
         values.put(COL_ID, ids[2]);
 
         String type;
-        if (question instanceof QuestionQCM)
-            type="QuestionQCM";
-        else
+        if (question instanceof QuestionQCM) {
+            type = QUESTION_TYPE_QCM;
+            DAOQuestionQCM dao = new DAOQuestionQCM(this.context);
+            dao.insert((QuestionQCM)question);
+        } else
             throw new Exception("DAO-"+TABLE_NAME+": Unknow class");
 
 
@@ -83,47 +89,75 @@ public class DAOQuestion extends BaseDAO {
         return getDB().insert(TABLE_NAME, null, values);
     }
 
-    public int removeByID(String id) {
+    public int removeByID(String id) throws Exception {
         //Suppression d'une question de la BD à partir de l'ID
-        // TODO!
-        return getDB().delete(TABLE_NAME, COL_ID + " = " + id, null);
+        Pair<String,String> type = selectById(id);
+        String[] ids = id.split(":");
+        int success;
+        if (type.second.equals(QUESTION_TYPE_QCM)) {
+            DAOQuestionQCM dao = new DAOQuestionQCM(this.context);
+            success = dao.removeByID(id);
+        } else
+            throw new Exception("DAO-"+TABLE_NAME+": Unknow type");
+        String where = COL_GAME_ID + " = " + ids[0] + " AND " + COL_LEVEL_ID + " = " + ids[1] + " AND " + COL_ID + "=" + ids[2];
+        success += getDB().delete(TABLE_NAME, where, null);
+        return success;
     }
 
-    public int remove(Question question) {
+    public int remove(Question question) throws Exception {
         return removeByID(question.getID());
     }
 
-    public List<Question> selectAll() {
+    public List<Question> selectAll() throws Exception {
         ArrayList<Question> res = new ArrayList<>();
         //Récupère dans un Cursor les valeur correspondant à des enregistrements de question contenu dans la BD
         Cursor cursor = getDB().rawQuery("SELECT * FROM " + TABLE_NAME, null);
         List<Pair<String,String>> liste = cursorToListPair(cursor);
-
-        for (Pair<String,String> type: liste) {
-            // TODO: Aller chercher la Question dans la bonne DAO;
-            //res.add();
-        }
-
-        return res;
+        return getQuestionsFromListPair(liste);
     }
 
     public Question retrieveByID(String id) throws Exception {
-        Question res;
         //Récupère dans un Cursor les valeur correspondant à une question contenu dans la BD à l'aide de son id
+        Pair<String,String> type = selectById(id);
+        return getQuestionFromPair(type);
+    }
+
+    public List<Question> listByExerciseID(String id) throws Exception {
         String [] p =  id.split(":");
-        // TODO: Faire un throw si on a pas trois elements apres le split.
+        if (p.length!=2) throw new Exception("DAO-"+TABLE_NAME+": Invalid id.");
+        String where = COL_GAME_ID + "=? AND " + COL_LEVEL_ID + "=?";
+        Cursor cursor = getDB().rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + where, p);
+        return getQuestionsFromListPair(cursorToListPair(cursor));
+    }
+
+    private Question getQuestionFromPair(Pair<String,String> pair) throws Exception {
+        Question res;
+        // Rajouter les nouveaux types de question ici.
+        if (pair.second.equals(QUESTION_TYPE_QCM)) {
+            DAOQuestionQCM dao = new DAOQuestionQCM(this.context);
+            res = dao.retrieveByID(pair.first);
+            Log.d("DAO-"+TABLE_NAME,"A) Found question "+pair.first+" of type "+pair.second+" => "+res);
+        } else
+            throw new Exception("DAO-"+TABLE_NAME+": Unknown value for "+COL_TYPE);
+        return res;
+    }
+
+    private List<Question> getQuestionsFromListPair(List<Pair<String,String>> list) throws Exception {
+        ArrayList<Question> res = new ArrayList<>();
+        for (Pair<String,String> type: list) {
+            Question q = getQuestionFromPair(type);
+            res.add(q);
+            Log.d("DAO-"+TABLE_NAME,"B) Found question "+type.first+" of type "+type.second+" => "+q);
+        }
+        return res;
+    }
+
+    private Pair<String,String> selectById(String id) throws Exception {
+        String [] p =  id.split(":");
+        if (p.length!=3) throw new Exception("DAO-"+TABLE_NAME+": Invalid id.");
         String where = COL_GAME_ID + "=? AND " + COL_LEVEL_ID + "=? AND " + COL_ID + "=?";
         Cursor cursor = getDB().rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + where, p);
-        Pair<String,String> type = cursorToFirstPair(cursor);
-
-        if (type.second.equals("QuestionQCM")) {
-            // TODO: Appeller le retrieveByID dans la DAOQuestionQCM
-            res = null;
-        } else {
-            throw new Exception("DAO-"+TABLE_NAME+": Unknown value for "+COL_TYPE);
-        }
-
-        return res;
+        return cursorToFirstPair(cursor);
     }
 
     //Cette méthode permet de convertir un cursor en une liste de questions

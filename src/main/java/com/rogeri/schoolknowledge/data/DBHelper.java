@@ -11,13 +11,13 @@ import android.util.Log;
 public class DBHelper extends SQLiteOpenHelper {
 
     // VERSION de la bdd, permet les mises à jour des tables et champs au lancement de l'application
-    private static final int VERSION = 1;
+    private static final int VERSION = 5;
 
     // NOM de la base
     private static final String DATABASE_NAME = "database_rogeri_schoolknowledge";
 
     // TAG pour le log
-    private static final String TAG = "DBHelper";
+    private static final String TAG = "DAO-DBHelper";
 
     // Constructeur
     public DBHelper(Context context, SQLiteDatabase.CursorFactory factory) {
@@ -28,10 +28,23 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         // Créer la table question
+        //db.execSQL(DAOUser.CREATE_TABLE);
+        db.execSQL(DAOGame.CREATE_TABLE);
+        db.execSQL(DAOExercise.CREATE_TABLE);
+        db.execSQL(DAOQuestion.CREATE_TABLE);
         db.execSQL(DAOQuestionQCM.CREATE_TABLE);
 
 
         // Insérer les données
+        for (String insert : DAOGame.getInsertSQL()) {
+            db.execSQL(insert);
+        }
+        for (String insert : DAOExercise.getInsertSQL()) {
+            db.execSQL(insert);
+        }
+        for (String insert : DAOQuestion.getInsertSQL()) {
+            db.execSQL(insert);
+        }
         for (String insert : DAOQuestionQCM.getInsertSQL()) {
             db.execSQL(insert);
         }
@@ -48,6 +61,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
         // DROP
         db.execSQL(DAOQuestionQCM.DROP_TABLE);
+        db.execSQL(DAOQuestion.DROP_TABLE);
+        db.execSQL(DAOExercise.DROP_TABLE);
+        db.execSQL(DAOGame.DROP_TABLE);
+        //db.execSQL(DAOUser.DROP_TABLE);
 
         // Relancer la création
         onCreate(db);

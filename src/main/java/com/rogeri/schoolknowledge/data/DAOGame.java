@@ -16,21 +16,21 @@ import java.util.List;
  * Created by rogeri on 18/03/16.
  */
 public class DAOGame extends BaseDAO {
-    public static final String TABLE_NAME = "Exercise";
+    public static final String TABLE_NAME = "Game";
 
     public static final String COL_ID = "id"; // Public: it's a new ID
     private static final String COL_NAME = "name";
     private static final String COL_INFO = "info";
     private static final String COL_PIC = "picID";
 
-    public static final String CREATE_TABLE = "CREATE_TABLE "+TABLE_NAME+" ("+
+    public static final String CREATE_TABLE = "CREATE TABLE "+TABLE_NAME+" ("+
             COL_ID+" INTEGER PRIMARY KEY,"+
             COL_NAME+" VARCHAR(50),"+
             COL_INFO+" VARCHAR(200),"+
             COL_PIC+" INTEGER"+
             ");";
 
-    public static final String DROP_TABLE = "DROP_TABLE "+TABLE_NAME+" IF EXISTS;";
+    public static final String DROP_TABLE = "DROP TABLE "+TABLE_NAME+" IF EXISTS;";
 
     public DAOGame(Context ctx) {
         super(ctx);

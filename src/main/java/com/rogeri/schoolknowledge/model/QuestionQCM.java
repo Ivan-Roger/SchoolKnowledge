@@ -1,5 +1,7 @@
 package com.rogeri.schoolknowledge.model;
 
+import android.util.Log;
+
 import com.rogeri.schoolknowledge.controler.ActivityQCM;
 import com.rogeri.schoolknowledge.model.Question;
 
@@ -16,7 +18,7 @@ public class QuestionQCM extends Question {
     private List<Boolean> answers;
     private boolean showCount;
 
-    public static int type() { return Question.TYPE_QCM; }
+    public int type() { return Question.TYPE_QCM; }
 
     public QuestionQCM(String id, int score, String question, List<String> reponses, List<Boolean> answers, boolean showCount) {
         this(id, score);
@@ -31,7 +33,7 @@ public class QuestionQCM extends Question {
     }
 
     public QuestionQCM(String id, int score) {
-        super(id,score);
+        super(id, score);
     }
 
     public void setQuestion(String question) {
@@ -60,6 +62,12 @@ public class QuestionQCM extends Question {
                 res+=", ";
         }
         return res;
+    }
+
+    public void debug() {
+        Log.d("QuestionQCM-DEBUG", "Question: "+question);
+        Log.d("QuestionQCM-DEBUG", "showCount: "+showCount);
+        //Log.d("QuestionQCM-DEBUG", "Question: "+question);
     }
 
     public List<Boolean> getAnswers() { return answers; }

@@ -14,6 +14,7 @@ public abstract class Question {
         this.score = score;
     }
 
+    abstract public int type();
     public String getID() { return id; }
     public int getScore() {
         return score;

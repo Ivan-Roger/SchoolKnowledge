@@ -22,16 +22,17 @@ public class DAOExercise extends BaseDAO {
 
     private static final String COL_GAME_ID = "gameID";
     public static final String COL_ID = "id"; // Public: it's a new ID
-    private static final String COL_LEVEL = "level";
+    private static final String COL_NAME = "name";
 
-    public static final String CREATE_TABLE = "CREATE_TABLE "+TABLE_NAME+" ("+
-            COL_GAME_ID+" INTEGER PRIMARY KEY,"+
-            COL_ID+" INTEGER PRIMARY KEY,"+
-            COL_LEVEL+" VARCHAR(50),"+
-            "FOREIGN KEY("+COL_GAME_ID+") REFERENCES "+DAOGame.TABLE_NAME+"("+DAOGame.COL_ID+"),"+
+    public static final String CREATE_TABLE = "CREATE TABLE "+TABLE_NAME+" ("+
+            COL_GAME_ID+" INTEGER,"+
+            COL_ID+" INTEGER,"+
+            COL_NAME+" VARCHAR(50),"+
+            "PRIMARY KEY("+COL_GAME_ID+", "+COL_ID+"),"+
+            "FOREIGN KEY("+COL_GAME_ID+") REFERENCES "+DAOGame.TABLE_NAME+"("+DAOGame.COL_ID+")"+
             ");";
 
-    public static final String DROP_TABLE = "DROP_TABLE "+TABLE_NAME+" IF EXISTS;";
+    public static final String DROP_TABLE = "DROP TABLE "+TABLE_NAME+" IF EXISTS;";
 
     public DAOExercise(Context ctx) {
         super(ctx);
@@ -67,7 +68,7 @@ public class DAOExercise extends BaseDAO {
         String[] ids = exo.getID().split(":");
         values.put(COL_GAME_ID, ids[0]);
         values.put(COL_ID, ids[1]);
-        values.put(COL_LEVEL, exo.getName());
+        values.put(COL_NAME, exo.getName());
 
         // Insertion de l'objet dans la BD via le ContentValues
         return getDB().insert(TABLE_NAME, null, values);
@@ -81,7 +82,7 @@ public class DAOExercise extends BaseDAO {
         String[] ids = exo.getID().split(":");
         values.put(COL_GAME_ID, ids[0]);
         values.put(COL_ID, ids[1]);
-        values.put(COL_LEVEL, exo.getName());
+        values.put(COL_NAME, exo.getName());
 
         // Insertion de l'objet dans la BD via le ContentValues et l'identifiant
         String where = COL_GAME_ID + " = " + ids[0] + " AND " + COL_ID + " = " + ids[1];
@@ -141,7 +142,7 @@ public class DAOExercise extends BaseDAO {
         // Récupére l'index des champs
         int indexGameId = cursor.getColumnIndex(COL_GAME_ID);
         int indexId = cursor.getColumnIndex(COL_ID);
-        int indexLevel = cursor.getColumnIndex(COL_LEVEL);
+        int indexLevel = cursor.getColumnIndex(COL_NAME);
 
         int gameID = cursor.getInt(indexGameId);
         int id = cursor.getInt(indexId);

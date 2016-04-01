@@ -28,8 +28,7 @@ public class ActivityHome extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState!=null) {
-            // Restauration: On remet les valeurs
-            // TODO
+            // TODO: Restauration, on remet les valeurs
 
             // Temporairement on ferme l'appli
             super.finish();
@@ -40,9 +39,9 @@ public class ActivityHome extends AppCompatActivity {
             int playerID = getIntent().getIntExtra(EXTRA_PLAYER_ID,-1);
             int loginMode = getIntent().getIntExtra(EXTRA_LOGIN_MODE,-1);
 
-            DAOGame gameDAO = new DAOGame();
+            DAOGame gameDAO = new DAOGame(this);
             ListView gameList = (ListView) findViewById(R.id.home_games_list);
-            final GameViewAdapter adapter = new GameViewAdapter(this,R.layout.layout_user_template,gameDAO.getGames());
+            final GameViewAdapter adapter = new GameViewAdapter(this,R.layout.layout_user_template,gameDAO.selectAll());
             gameList.setAdapter(adapter);
             gameList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
