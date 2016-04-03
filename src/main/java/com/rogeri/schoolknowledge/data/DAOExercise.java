@@ -46,9 +46,10 @@ public class DAOExercise extends BaseDAO {
 
         String[] DATA = {
                 //  IDs    Level
-                "0, 0, 'Niveau 1'",
+                "0, 0, 'Additions'",
                 "0, 1, 'Niveau 2'",
-                "0, 2, 'Niveau 3'"
+                "1, 0, 'Niveau 1'",
+                "2, 0, 'Niveau 1'"
         };
         //
         String[] liste = new String[DATA.length];

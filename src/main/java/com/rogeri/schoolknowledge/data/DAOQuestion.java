@@ -55,9 +55,8 @@ public class DAOQuestion extends BaseDAO {
                 "0, 0, 2, '"+QUESTION_TYPE_QCM+"'",
                 "0, 1, 0, '"+QUESTION_TYPE_QCM+"'",
                 "0, 1, 1, '"+QUESTION_TYPE_QCM+"'",
-                "0, 1, 2, '"+QUESTION_TYPE_QCM+"'",
-                "0, 2, 0, '"+QUESTION_TYPE_QCM+"'",
-                "0, 2, 1, '"+QUESTION_TYPE_QCM+"'"
+                "1, 0, 0, '"+QUESTION_TYPE_QCM+"'",
+                "2, 0, 0, '"+QUESTION_TYPE_QCM+"'"
         };
         //
         String[] liste = new String[DATA.length];

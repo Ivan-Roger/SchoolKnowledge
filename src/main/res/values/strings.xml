@@ -26,4 +26,8 @@
     <string name="replay">Rejouer</string>
 
     <string name="quit">Retour</string>
+
+    <string name="exercise_result_title">Fin de l\'exercice</string>
+
+    <string name="exercise_result_correction">Correction</string>
 </resources>

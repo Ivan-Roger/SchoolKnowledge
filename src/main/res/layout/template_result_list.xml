@@ -2,19 +2,46 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:id="@+id/template_result_state"
+        android:src="@android:drawable/presence_online"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="00/00 pts"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/template_result_points"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:gravity="right" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text=""
-        android:id="@+id/template_result_name"
-        android:layout_alignParentTop="true" />
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+        android:text="dfjdwjjfvjxjvokxjkbvxklfbklxfiovxowsifvgoiqsjfovgisjf ?"
+        android:id="@+id/template_result_title"
+        android:layout_alignParentTop="true"
+        android:layout_alignTop="@id/template_result_state"
+        android:layout_toEndOf="@id/template_result_state"
+        android:layout_toStartOf="@id/template_result_points" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text=""
+        android:text="Réponse"
         android:id="@+id/template_result_info"
-        android:layout_below="@+id/template_result_name" />
+        android:layout_below="@+id/template_result_title"
+        android:layout_alignStart="@id/template_result_title" />
+
 </RelativeLayout>

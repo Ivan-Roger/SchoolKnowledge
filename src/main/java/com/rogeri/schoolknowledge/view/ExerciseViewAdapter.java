@@ -18,24 +18,20 @@ import java.util.List;
 /**
  * Created by rogeri on 11/03/16.
  */
-public class ResultViewAdapter extends ArrayAdapter<ContentValues> {
-    private static final String LOG_TAG=SchoolKnowledge.LOG_TAG+"-ResultList";
+public class ExerciseViewAdapter extends ArrayAdapter<ContentValues> {
 
-    public static final String COL_TITLE="question";
-    public static final String COL_SCORE="score";
-    public static final String COL_POINTS="points";
-    public static final String COL_INFO="answer";
+    public static final String COL_TITLE="level";
+    public static final String COL_INFO="info";
 
     private Context context;
     private List<ContentValues> objects;
     private int viewId;
 
-    public ResultViewAdapter(Context context, int textViewResourceId,List<ContentValues> objects) {
+    public ExerciseViewAdapter(Context context, int textViewResourceId,List<ContentValues> objects) {
         super(context, textViewResourceId, objects);
         this.context = context;
         this.objects = objects;
         this.viewId = textViewResourceId;
-        Log.d(LOG_TAG,"Initialized ResultListAdapter. (length="+objects.size()+")");
     }
 
     @Override
@@ -49,21 +45,10 @@ public class ResultViewAdapter extends ArrayAdapter<ContentValues> {
         View view = inflater.inflate(viewId, parent, false);
         ContentValues item = objects.get(position);
 
-        int pts = item.getAsInteger(COL_SCORE);
-        ImageView state = (ImageView) view.findViewById(R.id.template_result_state);
-        if (pts>0) {
-          state.setImageResource(android.R.drawable.presence_online);
-        } else {
-          state.setImageResource(android.R.drawable.presence_offline);
-        }
-
-        TextView points = (TextView) view.findViewById(R.id.template_result_points);
-        points.setText(pts+"/"+item.getAsInteger(COL_POINTS)+" pts");
-
-        TextView title = (TextView) view.findViewById(R.id.template_result_title);
+        TextView title = (TextView) view.findViewById(R.id.template_exercise_name);
         title.setText(item.getAsString(COL_TITLE));
 
-        TextView info = (TextView) view.findViewById(R.id.template_result_info);
+        TextView info = (TextView) view.findViewById(R.id.template_exercise_info);
         info.setText(item.getAsString(COL_INFO));
 
         return view;

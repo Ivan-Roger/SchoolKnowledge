@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:outlineProvider="paddedBounds">
+
+    <RelativeLayout
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#536dfe"
+        android:layout_marginTop="20dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/template_exercise_name"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:padding="10dp"
+        android:textStyle="bold"
+        android:background="#304ffe"
+        android:textColor="@color/primary_text_default_material_dark"
+        android:textSize="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/template_exercise_info"
+        android:layout_below="@+id/template_exercise_name"
+        android:layout_alignParentStart="true"
+        style="bold"
+        android:textColor="#bbdefb"
+        android:textSize="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp" />
+</RelativeLayout>
+</FrameLayout>

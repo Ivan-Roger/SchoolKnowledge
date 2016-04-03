@@ -15,14 +15,30 @@ public abstract class Question {
     }
 
     abstract public int type();
+
     public String getID() { return id; }
+
     public String nextId() {
         String[] ids = id.split(":");
         int nID = Integer.parseInt(ids[2])+1;
 
         return ids[0]+":"+ids[1]+":"+nID;
     }
-    public int getScore() {
-        return score;
+
+    public int getScore() { return score; }
+
+    abstract public String getQuestion();
+
+    public String getTypeName() {
+        String res="";
+        switch (type()) {
+            case TYPE_QCM:
+                res="QCM";
+                break;
+            case TYPE_SIMPLE:
+                res="Question";
+                break;
+        }
+        return res;
     }
 }

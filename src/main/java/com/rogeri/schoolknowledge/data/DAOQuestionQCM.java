@@ -54,14 +54,13 @@ public class DAOQuestionQCM extends BaseDAO {
 
         String[] DATA = {
                 //  IDs     Question   Reponses    Answers    ShowCount    Score
-                "0, 0, 0, 'Question 1', '\"Rep A\", \"Rep B\", \"Rep C\"', '\"false\", \"true\", \"false\"', 0, 10",
-                "0, 0, 1, 'Question 2', '\"Yay\", \"Meh\", \"Poy\"', '\"true\", \"false\", \"true\"', 1, 12",
-                "0, 0, 2, 'Quel est le premier chiffre de la serie des nombres de Lost ?', '\"8\", \"4\", \"15\"', '\"false\", \"true\", \"false\"', 1, 11",
-                "0, 1, 0, 'Quel mot est familier ?', '\"Bonjour\", \"Aurevoir\", \"Salut\"', '\"false\", \"false\", \"true\"', 1, 11",
-                "0, 1, 1, 'De quand date la prise de la bastille ?', '\"1789\", \"2012\", \"1524\"', '\"true\", \"false\", \"false\"', 1, 5",
-                "0, 1, 2, 'Parmis la liste ci-dessous lesquels ne sont PAS des fruits ?', '\"Vanille\", \"Citron\", \"Pistache\"', '\"true\", \"false\", \"true\"', 0, 11",
-                "0, 2, 0, 'Question 1', '\"4\", \"8\", \"15\"', '\"false\", \"false\", \"true\"', 0, 11",
-                "0, 2, 1, 'Question 2', '\"4\", \"8\", \"15\"', '\"false\", \"false\", \"true\"', 0, 11"
+                "0, 0, 0, 'Combien font 22+7 ?', '\"27\", \"25\", \"31\", \"29\"', '\"false\", \"false\", \"false\", \"true\"', 1, 2",
+                "0, 0, 1, 'Faites la somme de 23 et 13.', '\"32\", \"64\", \"36\", \"24\"', '\"false\", \"false\", \"true\", \"false\"', 1, 6",
+                "0, 0, 2, 'Mamie me donne 2 pommes et papa 7, combien en ai-je ?', '\"8\", \"4\", \"9\"', '\"false\", \"false\", \"true\"', 1, 4",
+                "0, 1, 0, 'Je fais 14 pas en avant puis 5 en arriere, de combien de pas ai-je avance ?', '\"9\", \"19\", \"11\"', '\"true\", \"false\", \"false\"', 1, 5",
+                "0, 1, 1, 'A mon anniversaire 3 amis offrent 6 euros, combien ai-je recu ?', '\"7\", \"18\", \"12\"', '\"false\", \"true\", \"false\"', 1, 9",
+                "1, 0, 0, 'De quand date la prise de la bastille ?', '\"1789\", \"2012\", \"1524\"', '\"true\", \"false\", \"false\"', 1, 5",
+                "2, 0, 0, 'Parmis la liste ci-dessous lesquels ne sont PAS des fruits ?', '\"Vanille\", \"Citron\", \"Carotte\"', '\"true\", \"false\", \"true\"', 0, 11",
         };
         //
         String[] liste = new String[DATA.length];

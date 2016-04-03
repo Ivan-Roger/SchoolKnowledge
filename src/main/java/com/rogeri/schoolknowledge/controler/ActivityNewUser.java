@@ -67,7 +67,7 @@ public class ActivityNewUser extends AppCompatActivity {
       try {
         Log.d(LOG_TAG,"Creating user "+name.getText());
         DAOUser userDAO = new DAOUser(this);
-        User u = new User(User.getNextID(),name.getText().toString(), pickedImage, this);
+        User u = new User(User.getNextID(),name.getText().toString(), pickedImage);
         userDAO.insert(u);
         ((SchoolKnowledge)getApplication()).setPlayer(u);
         Intent _result = new Intent();

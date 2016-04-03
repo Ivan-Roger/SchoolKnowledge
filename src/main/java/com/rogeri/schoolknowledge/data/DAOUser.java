@@ -131,7 +131,7 @@ public class DAOUser extends BaseDAO {
         int id = cursor.getInt(indexId);
         String name = cursor.getString(indexName);
         int pic = cursor.getInt(indexPic);
-        return new User(id,name,pic, this.context);
+        return new User(id,name,pic);
     }
 
     //Cette méthode permet de convertir un cursor en une question

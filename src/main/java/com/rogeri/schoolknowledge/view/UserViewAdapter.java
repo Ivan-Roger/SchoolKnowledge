@@ -62,7 +62,7 @@ public class UserViewAdapter extends ArrayAdapter<User> {
 
         TextView userScore = (TextView) view.findViewById(R.id.user_template_info);
         try {
-          userScore.setText("Score: "+user.getTotalScore());
+          userScore.setText("Score: "+user.getTotalScore(getContext()));
         } catch(Exception e) {
           Log.e(LOG_TAG,e.getMessage());
           e.printStackTrace();

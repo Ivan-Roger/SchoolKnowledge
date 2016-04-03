@@ -43,6 +43,7 @@ public class QuestionQCM extends Question {
         this.answers = answers;
     }
 
+    @Override
     public String getQuestion() {
         return question;
     }

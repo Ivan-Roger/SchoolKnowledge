@@ -115,7 +115,7 @@ public class DAOScore extends BaseDAO {
     public int remove(Score score) throws Exception {
         String[] ids = score.getExerciseID().split(":");
         if(ids.length!=2) throw new Exception(LOG_TAG+": Invalid id.");
-        return removeByID(Integer.parseInt(ids[0]),Integer.parseInt(ids[1]),score.getUserID());
+        return removeByID(Integer.parseInt(ids[0]), Integer.parseInt(ids[1]), score.getUserID());
     }
 
     public List<Score> selectAll() {
@@ -136,6 +136,17 @@ public class DAOScore extends BaseDAO {
     public Score retrieveByID(int gameID, int levelID, int userID) {
         //Récupère dans un Cursor les valeur correspondant à une question contenu dans la BD à l'aide de son id
         String [] p =  {Integer.toString(gameID),Integer.toString(levelID),Integer.toString(userID)};
+        String where = COL_GAME_ID+" =? AND "+COL_LEVEL_ID+" =? AND "+COL_USER_ID+" =?";
+        Cursor cursor = getDB().rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + where, p);
+
+        return cursorToFirstScore(cursor);
+    }
+
+    public Score retrieveByID(String levelID, int userID) throws Exception {
+        //Récupère dans un Cursor les valeur correspondant à une question contenu dans la BD à l'aide de son id
+        String[] ids = levelID.split(":");
+        if (ids.length!=2) throw new Exception(LOG_TAG+": Invalid id.");
+        String [] p =  {ids[0],ids[1],Integer.toString(userID)};
         String where = COL_GAME_ID+" =? AND "+COL_LEVEL_ID+" =? AND "+COL_USER_ID+" =?";
         Cursor cursor = getDB().rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + where, p);
 

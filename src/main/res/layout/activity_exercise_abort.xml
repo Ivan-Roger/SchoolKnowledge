@@ -12,6 +12,42 @@
       android:textAppearance="?android:attr/textAppearanceLarge"
       android:text="@string/exercise_abort_info"
       android:id="@+id/exercise_abort_info"
-      android:layout_centerHorizontal="true" />
+      android:layout_alignParentTop="true"
+      android:layout_centerHorizontal="true"
+      android:layout_marginTop="20dp" />
 
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/exercise_result_btns"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_alignParentBottom="true">
+
+        <!-- First row. -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <!-- Equal weights cause two columns of equal width. -->
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/quit"
+                android:id="@+id/exercise_result_quit"
+                android:onClick="onQuit" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/replay"
+                android:id="@+id/exercise_result_replay"
+                android:onClick="onReplay" />
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>
