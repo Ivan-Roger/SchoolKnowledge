@@ -72,7 +72,16 @@ public class QuestionQCM extends Question {
     }
 
     public boolean isShowCount() {
-        return showCount;
+      return showCount;
+    }
+
+    public int getAnswersCount() {
+      int res=0;
+      for (Boolean r: answers) {
+          if (r)
+            res += 1;
+      }
+      return res;
     }
 
     public boolean checkAnswers(ArrayList<Boolean> ans) {

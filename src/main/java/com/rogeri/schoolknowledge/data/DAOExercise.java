@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.rogeri.schoolknowledge.SchoolKnowledge;
 import com.rogeri.schoolknowledge.model.Exercise;
 import com.rogeri.schoolknowledge.model.Question;
 import com.rogeri.schoolknowledge.model.QuestionQCM;
@@ -19,6 +20,7 @@ import java.util.List;
  */
 public class DAOExercise extends BaseDAO {
     public static final String TABLE_NAME = "Exercise";
+    private static final String LOG_TAG=SchoolKnowledge.LOG_TAG+"-DAO-"+TABLE_NAME;
 
     private static final String COL_GAME_ID = "gameID";
     public static final String COL_ID = "id"; // Public: it's a new ID
@@ -150,7 +152,7 @@ public class DAOExercise extends BaseDAO {
         int id = cursor.getInt(indexId);
         String level = cursor.getString(indexLevel);
         Exercise res = new Exercise(gameID,id,level,this.context);
-        Log.d("DAO-"+TABLE_NAME,"Found exercise "+res+", id: "+res.getID()+" with name \""+res.getName()+"\".");
+        //Log.d(LOG_TAG,"Found exercise "+res+", id: "+res.getID()+" with name \""+res.getName()+"\".");
         return res;
     }
 

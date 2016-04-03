@@ -10,8 +10,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.util.Log;
 
 import com.rogeri.schoolknowledge.R;
+import com.rogeri.schoolknowledge.SchoolKnowledge;
 import com.rogeri.schoolknowledge.data.DAOGame;
 import com.rogeri.schoolknowledge.data.DAOUser;
 import com.rogeri.schoolknowledge.model.Game;
@@ -19,78 +21,113 @@ import com.rogeri.schoolknowledge.model.User;
 import com.rogeri.schoolknowledge.view.GameViewAdapter;
 
 public class ActivityHome extends AppCompatActivity {
-    public static final String EXTRA_LOGIN_MODE = "loginMode";
-    public static final int LOGIN_MODE_USER = 0;
-    public static final int LOGIN_MODE_ANONYMOUS = 1;
-    public static final String EXTRA_PLAYER_ID = "playerID";
+  private static final String LOG_TAG=SchoolKnowledge.LOG_TAG+"-Home";
+  private static final String SAVE_ANONYMOUS="anonymous";
+  private static final String SAVE_PLAYER_ID="playerID";
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (savedInstanceState!=null) {
-            // TODO: Restauration, on remet les valeurs
-
-            // Temporairement on ferme l'appli
-            super.finish();
-        } else if (getIntent().getIntExtra(EXTRA_LOGIN_MODE,-1)!=-1) {
-            // Après connexion: Affichage normal
-            setContentView(R.layout.activity_home);
-
-            int playerID = getIntent().getIntExtra(EXTRA_PLAYER_ID,-1);
-            int loginMode = getIntent().getIntExtra(EXTRA_LOGIN_MODE,-1);
-
-            DAOGame gameDAO = new DAOGame(this);
-            ListView gameList = (ListView) findViewById(R.id.home_games_list);
-            final GameViewAdapter adapter = new GameViewAdapter(this,R.layout.layout_user_template,gameDAO.selectAll());
-            gameList.setAdapter(adapter);
-            gameList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    playGame(adapter.getItem(position));
-                }
-            });
-
-            if (loginMode==LOGIN_MODE_ANONYMOUS) {
-                // Nothing yet
-            } else if (loginMode==LOGIN_MODE_USER) {
-                DAOUser userDAO = new DAOUser();
-                User u = userDAO.getJoueur(playerID);
-                ImageView pic = (ImageView) findViewById(R.id.home_user_pic);
-                pic.setImageResource(ActivityNewUser.USER_PICTURES[u.getPic()]);
-                TextView name = (TextView) findViewById(R.id.home_user_name);
-                name.setText(u.getName());
-                TextView info = (TextView) findViewById(R.id.home_user_info);
-                info.setText("Score: "+u.getTotalScore());
-            }
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    SchoolKnowledge app = (SchoolKnowledge)getApplication();
+    if (savedInstanceState!=null) {
+      Log.d(LOG_TAG,"Restauration des valeurs.");
+      if (!app.isLoggedIn()) {
+        if (savedInstanceState.getInt(SAVE_ANONYMOUS,-1)==1) {
+          app.setAnonymous();
         } else {
-            // Premier lancement: Connexion
-            Intent intent = new Intent(this, ActivityLogin.class);
-            startActivity(intent);
+          DAOUser daoU = new DAOUser(this);
+          int idP = savedInstanceState.getInt(SAVE_PLAYER_ID,-1);
+          if (idP!=-1) {
+            User u = daoU.retrieveByID(idP);
+            app.setPlayer(u);
+          }
         }
+      }
     }
+    if (app.isLoggedIn()) {
+      Log.d(LOG_TAG,"Displaying game selection");
+      // Après connexion: Affichage normal
+      setContentView(R.layout.activity_home);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
+      DAOGame gameDAO = new DAOGame(this);
+      ListView gameList = (ListView) findViewById(R.id.home_games_list);
+      final GameViewAdapter adapter = new GameViewAdapter(this,R.layout.template_user_list,gameDAO.selectAll());
+      gameList.setAdapter(adapter);
+      gameList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+          playGame(adapter.getItem(position));
+        }
+      });
 
+      if (app.isAnonymous()==false) {
+        User u = app.getPlayer();
+        ImageView pic = (ImageView) findViewById(R.id.home_user_pic);
+        pic.setImageResource(ActivityNewUser.USER_PICTURES[u.getPic()]);
+        TextView name = (TextView) findViewById(R.id.home_user_name);
+        name.setText(u.getName());
+        TextView info = (TextView) findViewById(R.id.home_user_info);
+        updatePlayerScore();
+        try {
+          info.setText("Score: "+u.getTotalScore());
+        } catch(Exception e) {
+          Log.e(LOG_TAG,e.getMessage());
+          e.printStackTrace();
+        }
+      }
+    } else {
+      Log.d(LOG_TAG,"   ---   STARTING APPLICATION   ---   ");
+      // Premier lancement: Connexion
+      Intent intent = new Intent(this, ActivityLogin.class);
+      startActivity(intent);
     }
-/*
-    @Override
-    public void onBackPressed() {
-        super.finish();
-    }
-*/
-    private void playGame(Game g) {
-        Intent intent = new Intent(this, ActivityLevelSelection.class);
-        intent.putExtra(ActivityLevelSelection.EXTRA_GAME_ID, g.getID());
-        startActivity(intent);
-    }
+  }
 
-    public void logout(View v) {
-        Intent intent = new Intent(this, ActivityLogin.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        super.finish();
-        // TODO: Doesn't work !
+  protected void onSaveInstanceState(Bundle outState) {
+    Log.d(LOG_TAG,"Saving instance state.");
+    SchoolKnowledge app = (SchoolKnowledge)getApplication();
+    if (app.isLoggedIn()) {
+      outState.putInt(SAVE_ANONYMOUS,(app.isAnonymous()?1:0));
+      if (!app.isAnonymous())
+        outState.putInt(SAVE_PLAYER_ID,app.getPlayer().getID());
     }
+    super.onSaveInstanceState(outState);
+  }
+
+  private void updatePlayerScore() {
+    try {
+      User u = ((SchoolKnowledge)getApplication()).getPlayer();
+      TextView info = (TextView) findViewById(R.id.home_user_info);
+      info.setText("Score: "+u.getTotalScore());
+    } catch(Exception e) {
+      Log.e(LOG_TAG,e.getMessage());
+      e.printStackTrace();
+    }
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    return super.onCreateOptionsMenu(menu);
+  }
+
+  @Override
+  public void onBackPressed() {
+    DAOGame dao = new DAOGame(this);
+    dao.close();
+    super.onBackPressed();
+  }
+
+  private void playGame(Game g) {
+    Intent intent = new Intent(this, ActivityLevelSelection.class);
+    intent.putExtra(ActivityLevelSelection.EXTRA_GAME_ID, g.getID());
+    Log.d(LOG_TAG,"Starting game "+g.getName()+"["+g.getID()+"].");
+    startActivity(intent);
+  }
+
+  public void logout(View v) {
+    Intent intent = new Intent(this, ActivityLogin.class);
+    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    ((SchoolKnowledge)getApplication()).logout();
+    startActivity(intent);
+  }
 }

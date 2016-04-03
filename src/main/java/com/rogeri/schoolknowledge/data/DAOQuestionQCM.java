@@ -5,12 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
-import com.rogeri.schoolknowledge.model.Question;
+import com.rogeri.schoolknowledge.SchoolKnowledge;
 import com.rogeri.schoolknowledge.model.QuestionQCM;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -18,6 +16,7 @@ import java.util.List;
  */
 public class DAOQuestionQCM extends BaseDAO {
     public static final String TABLE_NAME = "QuestionQCM";
+    private static final String LOG_TAG=SchoolKnowledge.LOG_TAG+"-DAO-"+TABLE_NAME;
 
     private static final String COL_GAME_ID = "gameID";
     private static final String COL_LEVEL_ID = "levelID";

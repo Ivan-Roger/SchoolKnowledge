@@ -7,6 +7,7 @@
         android:label="@string/app_name"
         android:icon="@mipmap/app_logo"
         android:supportsRtl="true"
+        android:name="com.rogeri.schoolknowledge.SchoolKnowledge"
         android:theme="@style/AppTheme">
         <activity
             android:name=".controler.ActivityHome">

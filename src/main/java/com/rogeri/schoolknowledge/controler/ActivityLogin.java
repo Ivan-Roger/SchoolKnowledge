@@ -9,13 +9,18 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+import android.app.Activity;
+import android.content.Context;
 
 import com.rogeri.schoolknowledge.R;
+import com.rogeri.schoolknowledge.SchoolKnowledge;
 import com.rogeri.schoolknowledge.data.DAOUser;
 import com.rogeri.schoolknowledge.model.User;
 import com.rogeri.schoolknowledge.view.UserViewAdapter;
 
 public class ActivityLogin extends AppCompatActivity {
+  private static final String LOG_TAG=SchoolKnowledge.LOG_TAG+"-Login";
+  private static final int REQUEST_NEW_USER=30;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +40,8 @@ public class ActivityLogin extends AppCompatActivity {
 
     private void updateLoginList() {
         ListView list = (ListView) findViewById(R.id.login_user_list);
-        DAOUser userDAO = new DAOUser();
-        final UserViewAdapter adapter = new UserViewAdapter(this,R.layout.layout_user_template,userDAO.getJoueurs());
+        DAOUser userDAO = new DAOUser(this);
+        final UserViewAdapter adapter = new UserViewAdapter(this,R.layout.template_user_list,userDAO.selectAll());
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -47,22 +52,36 @@ public class ActivityLogin extends AppCompatActivity {
     }
 
     public void onUserNew(View v) {
+        Log.d(LOG_TAG,"Oppening new user.");
         Intent intent = new Intent(this, ActivityNewUser.class);
-        startActivity(intent);
+        startActivityForResult(intent,REQUEST_NEW_USER);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+      if (requestCode==REQUEST_NEW_USER) {
+        if (resultCode==Activity.RESULT_OK) {
+          Intent intent = new Intent(this, ActivityHome.class);
+          intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+          startActivity(intent);
+        }
+      }
+      super.onActivityResult(resultCode, requestCode, data);
     }
 
     public void onUserLogin(User u) {
+        Log.d(LOG_TAG,"Logging in with user "+u.getName());
         Intent intent = new Intent(this, ActivityHome.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra(ActivityHome.EXTRA_LOGIN_MODE, ActivityHome.LOGIN_MODE_USER);
-        intent.putExtra(ActivityHome.EXTRA_PLAYER_ID, u.getID());
+        ((SchoolKnowledge)getApplication()).setPlayer(u);
         startActivity(intent);
     }
 
     public void onAnonymousLogin(View v) {
+      Log.d(LOG_TAG,"Logging in anonymously.");
         Intent intent = new Intent(this, ActivityHome.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra(ActivityHome.EXTRA_LOGIN_MODE, ActivityHome.LOGIN_MODE_ANONYMOUS);
+        ((SchoolKnowledge)getApplication()).setAnonymous();
         startActivity(intent);
     }
 

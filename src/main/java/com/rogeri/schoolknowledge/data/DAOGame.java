@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.rogeri.schoolknowledge.SchoolKnowledge;
 import com.rogeri.schoolknowledge.model.Exercise;
 import com.rogeri.schoolknowledge.model.Game;
 import com.rogeri.schoolknowledge.model.QuestionQCM;
@@ -17,6 +18,7 @@ import java.util.List;
  */
 public class DAOGame extends BaseDAO {
     public static final String TABLE_NAME = "Game";
+    private static final String LOG_TAG=SchoolKnowledge.LOG_TAG+"-DAO-"+TABLE_NAME;
 
     public static final String COL_ID = "id"; // Public: it's a new ID
     private static final String COL_NAME = "name";

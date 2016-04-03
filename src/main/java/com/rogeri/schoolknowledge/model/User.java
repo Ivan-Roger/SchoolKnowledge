@@ -1,7 +1,13 @@
 package com.rogeri.schoolknowledge.model;
 
-import java.util.HashMap;
+import android.content.Context;
+import android.util.Log;
+
+import java.util.ArrayList;
 import java.util.Set;
+
+import com.rogeri.schoolknowledge.model.Score;
+import com.rogeri.schoolknowledge.data.DAOScore;
 
 /**
  * Created by rogeri on 08/03/16.
@@ -10,19 +16,19 @@ public class User {
     private int id;
     private String name;
     private int pic;
-    private HashMap<String,Integer> scores;
-    private static int lastID=0;
+    private Context ctx;
+    private static int nextID=0;
 
-    public User(int id, String name,int pic) {
-        lastID=Math.max(lastID,id)+1;
+    public User(int id, String name, int pic, Context ctx) {
+        nextID=Math.max(nextID,id)+1;
         this.id=id;
         this.name = name;
         this.pic = pic;
-        scores = new HashMap<String,Integer>();
+        this.ctx = ctx;
     }
 
     public static int getNextID() {
-        return lastID;
+        return nextID;
     }
 
     public int getID() { return id; }
@@ -33,31 +39,13 @@ public class User {
 
     public int getPic() { return pic; }
 
-    public void setScores(HashMap<String,Integer> scores) {
-        this.scores = scores;
-    }
-
-    public int getTotalScore() {
-        int res=0;
-        for (String game : scores.keySet()) {
-            res+=scores.get(game);
-        }
-        return res;
-    }
-
-    public int getScore(String game) {
-        return scores.get(game);
-    }
-
-    public Set<String> getScores() {
-        return scores.keySet();
-    }
-
-    public void newScore(String game, int value) {
-        scores.put(game, value);
-    }
-
-    public void addToScore(String game, int value) {
-        scores.put(game, (scores.get(game) + value) );
+    public int getTotalScore() throws Exception {
+      DAOScore dao = new DAOScore(ctx);
+      ArrayList<Score> list = new ArrayList<>(dao.selectAllByUserID(id));
+      int total=0;
+      for (Score s: list) {
+        total+=s.getScore();
+      }
+      return total;
     }
 }

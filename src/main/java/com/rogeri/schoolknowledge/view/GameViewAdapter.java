@@ -23,6 +23,7 @@ import java.util.List;
 public class GameViewAdapter extends ArrayAdapter<Game> {
     private Context context;
     private List<Game> objects;
+    private int viewId;
     private HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
 
     public GameViewAdapter(Context context, int textViewResourceId, List<Game> objects) {
@@ -32,6 +33,7 @@ public class GameViewAdapter extends ArrayAdapter<Game> {
         }
         this.context = context;
         this.objects = objects;
+        this.viewId = textViewResourceId;
     }
 
     @Override
@@ -48,18 +50,18 @@ public class GameViewAdapter extends ArrayAdapter<Game> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View userView = inflater.inflate(R.layout.layout_user_template, parent, false);
+        View view = inflater.inflate(viewId, parent, false);
         Game item = objects.get(position);
 
-        TextView userName = (TextView) userView.findViewById(R.id.user_template_name);
+        TextView userName = (TextView) view.findViewById(R.id.user_template_name);
         userName.setText(item.getName());
 
-        ImageView userPic = (ImageView) userView.findViewById(R.id.user_template_pic);
+        ImageView userPic = (ImageView) view.findViewById(R.id.user_template_pic);
         userPic.setImageResource(Game.GAME_PICTURES[item.getPic()]);
 
-        TextView userScore = (TextView) userView.findViewById(R.id.user_template_info);
+        TextView userScore = (TextView) view.findViewById(R.id.user_template_info);
         userScore.setText(item.getInfo());
 
-        return userView;
+        return view;
     }
 }

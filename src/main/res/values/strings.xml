@@ -20,4 +20,10 @@
     <string name="play_game_label">Séléctionnez un jeu:</string>
 
     <string name="level_select">Séléctionnez un niveau</string>
+
+    <string name="exercise_abort_info">Vous avez abandonné.</string>
+
+    <string name="replay">Rejouer</string>
+
+    <string name="quit">Retour</string>
 </resources>
